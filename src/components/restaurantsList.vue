@@ -1,25 +1,17 @@
 <template>
   <div>
+    <TopMenu></TopMenu>
   <form @submit.prevent="ajouterRestaurant($event)">
-    <md-field>
-      <label> Nom </label>
-      <md-input type="text" required v-model="nom" name="nom"></md-input>
-    </md-field>
-    <md-field>
+    <label> Nom </label>
+      <input type="text" required v-model="nom" name="nom">
       <label> Cuisine </label>
-      <md-input type="text" required v-model="cuisine" name="cuisine"></md-input>
-    </md-field>
-    <md-button type="submit" class="md-raised">Ajouter</md-button>
+      <input type="text" required v-model="cuisine" name="cuisine">
+    <button type="submit" class="md-raised">Ajouter</button>
   </form>
-
-  <h1>Nombre de restaurants : {{restaurantsNumber}}<br><br>
-    Nombre de restaurants dans la réponse : {{pageSize}}</h1>
-  <md-field>
     <label>Rechercher</label>
-    <md-input type="text" v-model="restaurantNameQuery" class="search"></md-input>
-  </md-field>
-  <md-button class="md-raised" type="submit" v-on:click="getRestaurantsFromServer">Rechercher</md-button>
-  <md-button class="md-raised" v-on:click="resetQuery">Reset</md-button>
+    <input type="text" v-model="restaurantNameQuery" class="search">
+  <button class="md-raised" type="submit" v-on:click="getRestaurantsFromServer">Rechercher</button>
+  <button class="md-raised" v-on:click="resetQuery">Reset</button>
   <table>
     <tr>
       <th>Nom</th>
@@ -36,16 +28,18 @@
   </table>
   <div class="queryselector">
     <input type="range" min="5" max="100" v-model="pageSize" step="5" id="slider">
-    <md-button class="md-raised" :disabled="pageNumber===0" v-on:click="goPrevious">Précèdent</md-button>
-    <md-button class="md-raised" v-on:click="goNext">Suivant</md-button>
+    <button class="md-raised" :disabled="pageNumber===0" v-on:click="goPrevious">Précèdent</button>
+    <button class="md-raised" v-on:click="goNext">Suivant</button>
   </div>
   </div>
 </template>
 
 <script>
 
+import TopMenu from "./TopMenu";
 export default {
   name: "restaurantsList",
+  components: {TopMenu},
   props: {
     msg: String,
   },
