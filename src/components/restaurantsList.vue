@@ -10,7 +10,7 @@
   </form>
     <label>Rechercher</label>
     <input type="text" v-model="restaurantNameQuery" class="search">
-  <button class="md-raised" type="submit" v-on:click="getRestaurantsFromServer">Rechercher</button>
+  <button class="md-raised" type="submit">Rechercher</button>
   <button class="md-raised" v-on:click="resetQuery">Reset</button>
   <table>
     <tr>
@@ -37,24 +37,13 @@
 <script>
 
 import TopMenu from "./TopMenu";
+import {restRestaurantsService} from "../main";
 export default {
   name: "restaurantsList",
   components: {TopMenu},
-  props: {
-    msg: String,
-  },
   data:function(){
     return {
-      restaurants: [
-        {
-          nom: 'café de Paris',
-          cuisine: 'Française',
-        },
-        {
-          nom: 'Sun City Café',
-          cuisine: 'Américaine'
-        }
-      ],
+      restaurants: restRestaurantsService.getTabRestaurants(),
       nom: '',
       cuisine: '',
       id: '',
@@ -66,95 +55,38 @@ export default {
   },
   methods: {
     supprimerRestaurant(index) {
-      let url = 'http://localhost:8080/api/restaurants/'+index;
-      fetch(url, {
-        method: 'DELETE',
-      }).then((response) => response.json())
-          .then((res)=>console.log(res))
-          .catch(function (err) {
-            console.log(err);
-          });
-      this.getRestaurantsFromServer();
+      restRestaurantsService.deleteRestaurant(index);
     },
     ajouterRestaurant(event) {
-      console.log(event)
-      event.preventDefault();
-      let formulaire = event.target;
-      let formData = new FormData(formulaire);
-      let url = "http://localhost:8080/api/restaurants";
-      fetch(url, {
-        method: "POST",
-        body: formData
-      })
-          .then((response) => response.json())
-          .then((res) => console.log(res))
-          .catch(function (err) {
-            console.log(err);
-          });
-      this.getRestaurantsFromServer();
+      restRestaurantsService.addRestaurant(event);
     },
     getColor(index) {
       return (index % 2) ? 'lightBlue' : 'pink';
     },
     resetQuery(){
       this.restaurantNameQuery = '';
-      this.getRestaurantsFromServer();
-    },
-    getRestaurantsFromServer(){
-      this.restaurants = [];
-      let url = 'http://localhost:8080/api/restaurants?'+'page='+this.pageNumber+'&pagesize='+this.pageSize+'&name='+this.restaurantNameQuery
-      fetch(url)
-          .then((response) => response.json())
-          .then((res) => {
-                for(let i=0;i<res.data.length;i++){
-                  this.restaurants.push(
-                      {
-                        nom: res.data[i].name,
-                        cuisine: res.data[i].cuisine,
-                        id: res.data[i]._id
-                      }
-                  )
-                }
-              }
-          )
-          .catch(function (err) {
-            console.log(err);
-          });
+      this.restaurants = restRestaurantsService.getRestaurantsFromServer();
     },
     goNext(){
       this.pageNumber++;
-      this.getRestaurantsFromServer();
+      restRestaurantsService.setPageNumber(this.pageNumber)
+      console.log(this.restaurants)
     },
     goPrevious(){
       if(this.pageNumber>0){
         this.pageNumber--;
-        this.getRestaurantsFromServer();
+        restRestaurantsService.setPageNumber(this.pageNumber)
       }
-    },
-    getRestaurantsCount(){
-      let url = 'http://localhost:8080/api/restaurants/count';
-      fetch(url)
-          .then((response) => response.json())
-          .then((res) => {
-                this.restaurantsNumber = res.data;
-              }
-          )
-          .catch(function (err) {
-            console.log(err);
-          });
     },
   },
   watch: {
     pageSize: function (val) {
       if (val) {
-        this.restaurants = [];
-        this.getRestaurantsFromServer();
+        restRestaurantsService.setPageSize(this.pageSize)
       }
     }
   },
   mounted(){
-    this.getRestaurantsFromServer();
-    this.getRestaurantsCount();
   }
 }
 </script>
