@@ -8,19 +8,11 @@ export default class restaurantsService {
         this.getRestaurantsFromServer();
         return this.tabRestaurants;
     }
-    getPageNumber(){
-        return this.pageNumber+1;
-    }
-    getPageSize(){
-        return this.pageSize;
-    }
     setPageNumber(pagenumber){
         this.pageNumber = pagenumber;
-        this.getRestaurantsFromServer();
     }
     setPageSize(pageSize){
         this.pageSize = pageSize;
-        this.getRestaurantsFromServer();
     }
     deleteRestaurant(index) {
         let url = 'http://localhost:8080/api/restaurants/'+index;
@@ -53,6 +45,7 @@ export default class restaurantsService {
     }
 
     getRestaurantsFromServer(){
+        this.tabRestaurants = [];
         let url = 'http://localhost:8080/api/restaurants?'+'page='+this.pageNumber+'&pagesize='+this.pageSize+'&name='+this.restaurantNameQuery
         fetch(url)
             .then((response) => response.json())
@@ -70,6 +63,6 @@ export default class restaurantsService {
             )
             .catch(function (err) {
                 console.log(err);
-            });
+            }); 
     }
 }

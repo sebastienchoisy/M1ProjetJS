@@ -12,20 +12,17 @@
     <input type="text" v-model="restaurantNameQuery" class="search">
   <button class="md-raised" type="submit">Rechercher</button>
   <button class="md-raised" v-on:click="resetQuery">Reset</button>
-  <table>
-    <tr>
-      <th>Nom</th>
-      <th>Cuisine </th>
-    </tr>
-    <tbody>
-    <tr v-for="(r,index) in restaurants" :key="index" v-bind:style="{backgroundColor:getColor(index)}"
-                  v-bind:class="{bordureRouge:(index === 2)}">
-      <td>{{r.nom}}</td>
-      <td> {{r.cuisine}}</td>
-      <td><button v-on:click="supprimerRestaurant(r.id)">Delete</button></td>
-    </tr>
-    </tbody>
-  </table>
+    <el-row :gutter="20">
+      <el-col v-for="(r,index) in restaurants" :key="index"  :span="6">
+        <div class="grid-content bg-purple">
+          <img src="~@/assets//imgresto.png" alt="">
+          <span>{{r.nom}}</span>
+          <span> {{r.cuisine}}</span>
+          <span> {{r.id}}</span>
+          <button v-on:click="supprimerRestaurant(r.id)">Delete</button>
+        </div>
+      </el-col>
+    </el-row>
   <div class="queryselector">
     <input type="range" min="5" max="100" v-model="pageSize" step="5" id="slider">
     <button class="md-raised" :disabled="pageNumber===0" v-on:click="goPrevious">Précèdent</button>
@@ -35,7 +32,6 @@
 </template>
 
 <script>
-
 import TopMenu from "./TopMenu";
 import {restRestaurantsService} from "../main";
 export default {
@@ -56,9 +52,11 @@ export default {
   methods: {
     supprimerRestaurant(index) {
       restRestaurantsService.deleteRestaurant(index);
+      this.restaurants = restRestaurantsService.getTabRestaurants();
     },
     ajouterRestaurant(event) {
       restRestaurantsService.addRestaurant(event);
+      this.restaurants = restRestaurantsService.getTabRestaurants();
     },
     getColor(index) {
       return (index % 2) ? 'lightBlue' : 'pink';
@@ -69,20 +67,22 @@ export default {
     },
     goNext(){
       this.pageNumber++;
-      restRestaurantsService.setPageNumber(this.pageNumber)
-      console.log(this.restaurants)
+      restRestaurantsService.setPageNumber(this.pageNumber);
+      this.restaurants = restRestaurantsService.getTabRestaurants();
     },
     goPrevious(){
       if(this.pageNumber>0){
         this.pageNumber--;
-        restRestaurantsService.setPageNumber(this.pageNumber)
+        restRestaurantsService.setPageNumber(this.pageNumber);
+        this.restaurants = restRestaurantsService.getTabRestaurants();
       }
     },
   },
   watch: {
     pageSize: function (val) {
       if (val) {
-        restRestaurantsService.setPageSize(this.pageSize)
+        restRestaurantsService.setPageSize(this.pageSize);
+        this.restaurants = restRestaurantsService.getTabRestaurants();
       }
     }
   },
@@ -130,12 +130,15 @@ form {
   margin: 6px 8px;
 }
 
-.md-field {
-  width:30%;
-  margin-left:1%;
-}
-
 .queryselector{
   margin-top:5%;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
