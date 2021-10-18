@@ -133,13 +133,13 @@ app.get('/api/restaurants/:id', function(req, res) {
  
 });
 
-app.get('/api/restaurants/details/:id', function(req,res){
+app.get('/api/restaurants/details/:id', function(req,res) {
+	var id = req.params.id;
 	var api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
-		let url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cphoto%2Crating%2Copening_hours&input=Tony%27S%20Deli&inputtype=textquery&locationbias=circle%3A2000%4040.694924%2C-73.902463&key=AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE'
-		/*'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cphoto%2Crating%2Copening_hours'+
-			'&input='+data.restaurant.name+'&inputtype=textquery'+
-			'&locationbias=circle%3A2000%40'+data.restaurant.address.coord[1]+'%2C'+data.restaurant.address.coord[0]+'&key='+api_key;
-			*/
+	mongoDBModule.findRestaurantById(id, function (data) {
+		let url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cphoto%2Crating%2Copening_hours' +
+			'&input=' + data.restaurant.name + '&inputtype=textquery' +
+			'&locationbias=circle%3A2000%40' + data.restaurant.address.coord[1] + '%2C' + data.restaurant.address.coord[0] + '&key=' + api_key;
 		fetch(url)
 			.then((response) => response.json())
 			.then((detail) => res.send(detail))
@@ -147,6 +147,31 @@ app.get('/api/restaurants/details/:id', function(req,res){
 				console.log(err);
 			});
 	});
+});
+
+app.get('/api/restaurants/photo/:id', function(req,res) {
+	let id = req.params.id;
+	let api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
+
+	mongoDBModule.findRestaurantById(id, function (data) {
+		let url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cphoto%2Crating%2Copening_hours' +
+			'&input=' + data.restaurant.name + '&inputtype=textquery' +
+			'&locationbias=circle%3A2000%40' + data.restaurant.address.coord[1] + '%2C' + data.restaurant.address.coord[0] + '&key=' + api_key;
+		fetch(url)
+			.then((response) => response.json())
+			.then((detail) => {
+				let photoRef = detail.candidates[0].photos[0].photo_reference;
+				let photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=150&photo_reference='+photoRef+'&key='+ api_key;
+				return fetch(photoUrl)
+					.then((response) => response)
+					.then((photo => photo.url))
+					.then((photoResponse)=>{res.send(JSON.stringify(photoResponse))})
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	});
+});
 
 // Creation d'un restaurant par envoi d'un formulaire
 // On fera l'insert par un POST, c'est le standard REST

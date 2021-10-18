@@ -15,7 +15,8 @@
     <el-row :gutter="20">
       <el-col v-for="(r,index) in restaurants" :key="index"  :span="6">
         <div class="grid-content bg-purple">
-          <img src="~@/assets//imgresto.png" alt="">
+          <img :src="getPhoto(r.id)" alt="">
+          <span> photoUrl : {{getPhoto(r.id)}}</span>
           <span>{{r.nom}}</span>
           <span> {{r.cuisine}}</span>
           <span> {{r.coord}}</span>
@@ -75,6 +76,9 @@ export default {
     },
     getDetails(id){
       restGoogleMapsService.getRestaurantDetails(id);
+    },
+    getPhoto(id){
+      return restGoogleMapsService.getRestaurantPhoto(id);
     },
     goPrevious(){
       if(this.pageNumber>0){
