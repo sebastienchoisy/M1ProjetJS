@@ -6,7 +6,6 @@
 
 <script>
 import restaurantsList from './components/restaurantsList.vue'
-
 export default {
   name: 'App',
   components: {

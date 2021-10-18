@@ -18,8 +18,9 @@
           <img src="~@/assets//imgresto.png" alt="">
           <span>{{r.nom}}</span>
           <span> {{r.cuisine}}</span>
-          <span> {{r.id}}</span>
+          <span> {{r.coord}}</span>
           <button v-on:click="supprimerRestaurant(r.id)">Delete</button>
+          <button v-on:click="getDetails(r.id)" >Details</button>
         </div>
       </el-col>
     </el-row>
@@ -33,7 +34,7 @@
 
 <script>
 import TopMenu from "./TopMenu";
-import {restRestaurantsService} from "../main";
+import {restRestaurantsService,restGoogleMapsService} from "../main";
 export default {
   name: "restaurantsList",
   components: {TopMenu},
@@ -43,7 +44,9 @@ export default {
       nom: '',
       cuisine: '',
       id: '',
-      pageSize: 5,
+      address: '',
+      coord: '',
+      pageSize: 12,
       pageNumber: 0,
       restaurantsNumber: 0,
       restaurantNameQuery: ''
@@ -69,6 +72,9 @@ export default {
       this.pageNumber++;
       restRestaurantsService.setPageNumber(this.pageNumber);
       this.restaurants = restRestaurantsService.getTabRestaurants();
+    },
+    getDetails(id){
+      restGoogleMapsService.getRestaurantDetails(id);
     },
     goPrevious(){
       if(this.pageNumber>0){

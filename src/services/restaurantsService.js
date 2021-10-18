@@ -1,7 +1,7 @@
 export default class restaurantsService {
     tabRestaurants = [];
     pageNumber = 0;
-    pageSize = 5;
+    pageSize = 12;
     restaurantNameQuery = '';
 
     getTabRestaurants(){
@@ -23,7 +23,6 @@ export default class restaurantsService {
             .catch(function (err) {
                 console.log(err);
             });
-        this.getRestaurantsFromServer()
     }
 
     addRestaurant(event) {
@@ -41,7 +40,6 @@ export default class restaurantsService {
             .catch(function (err) {
                 console.log(err);
             });
-        this.getRestaurantsFromServer();
     }
 
     getRestaurantsFromServer(){
@@ -55,7 +53,8 @@ export default class restaurantsService {
                             {
                                 nom: res.data[i].name,
                                 cuisine: res.data[i].cuisine,
-                                id: res.data[i]._id
+                                id: res.data[i]._id,
+                                coord: res.data[i].address.coord
                             }
                         )
                     }
