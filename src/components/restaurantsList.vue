@@ -14,15 +14,7 @@
   <button class="md-raised" v-on:click="resetQuery">Reset</button>
     <el-row :gutter="20">
       <el-col v-for="(r,index) in restaurants" :key="index"  :span="6">
-        <div class="grid-content bg-purple">
-          <img :src="getPhoto(r.id)" alt="">
-          <span> photoUrl : {{getPhoto(r.id)}}</span>
-          <span>{{r.nom}}</span>
-          <span> {{r.cuisine}}</span>
-          <span> {{r.coord}}</span>
-          <button v-on:click="supprimerRestaurant(r.id)">Delete</button>
-          <button v-on:click="getDetails(r.id)" >Details</button>
-        </div>
+        <restaurant :restaurant="r"></restaurant>
       </el-col>
     </el-row>
   <div class="queryselector">
@@ -35,10 +27,11 @@
 
 <script>
 import TopMenu from "./TopMenu";
+import restaurant from "./restaurant"
 import {restRestaurantsService,restGoogleMapsService} from "../main";
 export default {
   name: "restaurantsList",
-  components: {TopMenu},
+  components: {TopMenu,restaurant},
   data:function(){
     return {
       restaurants: restRestaurantsService.getTabRestaurants(),
@@ -50,7 +43,8 @@ export default {
       pageSize: 12,
       pageNumber: 0,
       restaurantsNumber: 0,
-      restaurantNameQuery: ''
+      restaurantNameQuery: '',
+      photo: ''
     }
   },
   methods: {
@@ -78,7 +72,7 @@ export default {
       restGoogleMapsService.getRestaurantDetails(id);
     },
     getPhoto(id){
-      return restGoogleMapsService.getRestaurantPhoto(id);
+      this.photo = restGoogleMapsService.getRestaurantPhoto(id);
     },
     goPrevious(){
       if(this.pageNumber>0){

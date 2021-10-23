@@ -10,10 +10,10 @@ export default class googleMapsService {
     }
 
      async getRestaurantPhoto(id){
-        let url = 'http://localhost:8080/api/restaurants/photo/'+id
+        let url = 'http://localhost:8080/api/restaurants/photo/'+id;
         await fetch(url)
-            .then((response) => {response.json()})
-            .then((responseJson) => {return responseJson})
+            .then((response) => response.text())
+            .then((photo) => {return photo})
             .catch(function (err) {
                 console.log(err);
             });
