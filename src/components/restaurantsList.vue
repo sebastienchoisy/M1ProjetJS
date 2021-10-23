@@ -12,7 +12,7 @@
     <input type="text" v-model="restaurantNameQuery" class="search">
   <button class="md-raised" type="submit">Rechercher</button>
   <button class="md-raised" v-on:click="resetQuery">Reset</button>
-    <el-row :gutter="20">
+    <el-row :gutter="25">
       <el-col v-for="(r,index) in restaurants" :key="index"  :span="6">
         <restaurant :restaurant="r"></restaurant>
       </el-col>
@@ -96,36 +96,7 @@ export default {
 </script>
 
 <style scoped>
-table {
-  border: 1px solid black;
-  width: 100%;
-  border-collapse: collapse;
-}
 
-tr,
-td {
-  border: 1px solid black;
-}
-
-td {
-  padding: 5px;
-}
-
-tr:hover {
-  background-color: yellow;
-}
-
-input:invalid {
-  background-color: pink;
-}
-
-input:valid {
-  background-color: lightGreen;
-}
-
-.bordureRouge {
-  border: 2px dashed red;
-}
 .search {
   margin-bottom: 2%;
 }
@@ -144,5 +115,9 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.el-col-6 {
+  padding:0 !important;
 }
 </style>

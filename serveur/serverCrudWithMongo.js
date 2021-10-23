@@ -163,9 +163,10 @@ app.get('/api/restaurants/photo/:id', function(req,res) {
 					let photoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=150&photo_reference=' + photoRef + '&key=' + api_key;
 					return fetch(photoUrl)
 						.then((response) => response)
-						.then((response)=>res.send(response.url))
+						.then((response)=>response.url)
+						.then((response)=>res.send(JSON.stringify(response)))
 				} else {
-					res.send('pas de photo');
+					res.send(JSON.stringify('photo introuvable'));
 				}
 			})
 			.catch(function (err) {

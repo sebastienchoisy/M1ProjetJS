@@ -1,13 +1,14 @@
 <template>
- <div>
+ <div class="header">
+   <img src="~@/assets//eat&joyLogo.png" alt="">
    <el-menu
        :default-active="activeIndex2"
        class="el-menu-demo top-menu"
        mode="horizontal"
        @select="handleSelect"
        background-color="#FFFFFF"
-       text-color="#00cca3"
-       active-text-color="#008066">
+       text-color="#083b66"
+       active-text-color="#cf1717">
      <el-menu-item index="1">Accueil</el-menu-item>
      <el-menu-item index="2">Mon Compte</el-menu-item>
      <el-menu-item index="3">Historique de commandes</el-menu-item>
@@ -34,8 +35,11 @@ export default {
 </script>
 
 <style scoped>
-.top-menu {
+
+.header {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 </style>
