@@ -25,6 +25,15 @@ export default class restaurantsService {
             });
     }
 
+    getRestaurantFromId(index){
+        let url = 'http://localhost:8080/api/restaurants/'+index;
+        return fetch(url)
+            .then((response)=>response.json())
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
+
     addRestaurant(event) {
         console.log(event)
         event.preventDefault();
@@ -62,6 +71,6 @@ export default class restaurantsService {
             )
             .catch(function (err) {
                 console.log(err);
-            }); 
+            });
     }
 }

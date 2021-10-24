@@ -14,7 +14,7 @@ export default class googleMapsService {
         let photoURL;
         await fetch(url)
             .then((response) =>{return response.json();})
-            .then((photo) => {photoURL = photo})
+            .then((photo) => photoURL = photo)
             .catch(function (err) {
                 console.log(err);
             });

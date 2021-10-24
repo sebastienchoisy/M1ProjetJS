@@ -1,7 +1,6 @@
 <template>
   <div>
-    <TopMenu></TopMenu>
-  <form @submit.prevent="ajouterRestaurant($event)">
+    <form @submit.prevent="ajouterRestaurant($event)">
     <label> Nom </label>
       <input type="text" required v-model="nom" name="nom">
       <label> Cuisine </label>
@@ -13,7 +12,7 @@
   <button class="md-raised" type="submit">Rechercher</button>
   <button class="md-raised" v-on:click="resetQuery">Reset</button>
     <el-row :gutter="25">
-      <el-col v-for="(r,index) in restaurants" :key="index"  :span="6">
+      <el-col v-for="(r,index) in restaurants" :key="index"  :span="4">
         <restaurant :restaurant="r"></restaurant>
       </el-col>
     </el-row>
@@ -26,12 +25,11 @@
 </template>
 
 <script>
-import TopMenu from "./TopMenu";
 import restaurant from "./restaurant"
 import {restRestaurantsService,restGoogleMapsService} from "../main";
 export default {
   name: "restaurantsList",
-  components: {TopMenu,restaurant},
+  components: {restaurant},
   data:function(){
     return {
       restaurants: restRestaurantsService.getTabRestaurants(),
@@ -55,9 +53,6 @@ export default {
     ajouterRestaurant(event) {
       restRestaurantsService.addRestaurant(event);
       this.restaurants = restRestaurantsService.getTabRestaurants();
-    },
-    getColor(index) {
-      return (index % 2) ? 'lightBlue' : 'pink';
     },
     resetQuery(){
       this.restaurantNameQuery = '';
@@ -115,6 +110,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .el-col-6 {

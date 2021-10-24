@@ -2,10 +2,11 @@
   <div class="grid-content restaurant">
     <img v-if="photo" :src="photo" alt="">
     <img v-else src="~@/assets//imgresto.png" alt="">
-    <span style="color:#cf1717">{{restaurant.nom}}</span>
+    <span style="color:#cf1717;font-weight: bold ">{{restaurant.nom}}</span>
     <span> {{restaurant.cuisine}}</span>
+    <span>{{restaurant.id}}</span>
     <div class="buttons_container">
-    <el-button type="primary" v-on:click="getPhoto(restaurant.id)">Commander</el-button>
+    <router-link :to="'/restaurant/'+restaurant.id"><el-button type="primary">Commander</el-button></router-link>
     </div>
   </div>
 </template>
