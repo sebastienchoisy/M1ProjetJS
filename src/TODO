@@ -1,0 +1,6 @@
+- Gérer le côté responsive avec @media et l'attribut span de la colonne (el-col) : si media < 1200, span = 6 par exemple
+- Faire le layout du component restaurantsDetails avec la map (google map)
+- Ajouter un field Carte dans la collection, pour y ajouter une carte et des menus
+- Faire un système d'authentification ( à définir )
+- Faire un système de commande
+- Améliorer le layout du component restaurantsList ( slider, images restaurants)

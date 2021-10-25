@@ -1,10 +1,12 @@
 <template>
   <div class="grid-content restaurant">
-    <img v-if="photo" :src="photo" alt="">
-    <img v-else src="~@/assets//imgresto.png" alt="">
+    <div class="image">
+    <el-image v-if="photo" fit="fill" :src="photo" alt=""></el-image>
+    <el-image v-else :src="defaultPhoto" alt=""></el-image>
+    </div>
     <span style="color:#cf1717;font-weight: bold ">{{restaurant.nom}}</span>
     <span> {{restaurant.cuisine}}</span>
-    <span>{{restaurant.id}}</span>
+    <span>{{restaurant.location}}</span>
     <div class="buttons_container">
     <router-link :to="'/restaurant/'+restaurant.id"><el-button type="primary">Commander</el-button></router-link>
     </div>
@@ -13,11 +15,13 @@
 
 <script>
 import {restGoogleMapsService} from "../main";
+const defaultPhoto = require('../assets/imgresto.png');
 export default {
   name: "restaurant",
   data:function(){
     return {
-  photo:''
+      photo:'',
+      defaultPhoto
     }
   },
   props: {
@@ -58,8 +62,23 @@ export default {
   .el-button--primary:hover{
     background-color: #1765a7;
   }
-  img {
+  .el-image {
     border-radius: 40px;
+    width: 100%; /* image box size as % of container, see step 1 */
+    height: 100%; /* image box size as % of container, see step 1 */
+  }
+  .image {
+    height:140px;
+    width:140px;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
   }
 </style>
 

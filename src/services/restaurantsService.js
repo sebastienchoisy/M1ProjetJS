@@ -1,7 +1,9 @@
+import {restGoogleMapsService} from "../main";
+
 export default class restaurantsService {
     tabRestaurants = [];
     pageNumber = 0;
-    pageSize = 12;
+    pageSize = 16;
     restaurantNameQuery = '';
 
     getTabRestaurants(){
@@ -58,12 +60,16 @@ export default class restaurantsService {
             .then((response) => response.json())
             .then((res) => {
                     for(let i=0;i<res.data.length;i++){
+                        let img;
+                        restGoogleMapsService.getRestaurantPhoto(res.data[i]._id).then((res)=> img = res);
                         this.tabRestaurants.push(
                             {
                                 nom: res.data[i].name,
                                 cuisine: res.data[i].cuisine,
+                                location : res.data[i].borough,
                                 id: res.data[i]._id,
-                                coord: res.data[i].address.coord
+                                coord: res.data[i].address.coord,
+                                img : img
                             }
                         )
                     }
@@ -72,5 +78,6 @@ export default class restaurantsService {
             .catch(function (err) {
                 console.log(err);
             });
+        console.log(this.tabRestaurants)
     }
 }

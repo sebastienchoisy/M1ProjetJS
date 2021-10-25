@@ -1,5 +1,5 @@
 <template>
- <div><span>{{ this.restaurant.name }}</span></div>
+ <div><span>{{ this.restaurant.img }}</span></div>
 </template>
 
 <script>

@@ -21,7 +21,7 @@
     </div>
   </div>
     <el-row :gutter="25">
-      <el-col v-for="(r,index) in restaurants" :key="index"  :span="4">
+      <el-col v-for="(r,index) in restaurants" :key="index" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
         <restaurant :restaurant="r"></restaurant>
       </el-col>
     </el-row>
@@ -47,7 +47,7 @@ export default {
       id: '',
       address: '',
       coord: '',
-      pageSize: 12,
+      pageSize: 16,
       pageNumber: 0,
       restaurantsNumber: 0,
       restaurantNameQuery: '',
@@ -112,15 +112,7 @@ form {
 .queryselector{
   margin-top:5%;
 }
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-  margin-top: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
+
 
 .el-col-6 {
   padding:0 !important;
