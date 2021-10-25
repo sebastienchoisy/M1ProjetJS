@@ -1,4 +1,4 @@
-import {restGoogleMapsService} from "../main";
+
 
 export default class restaurantsService {
     tabRestaurants = [];
@@ -59,25 +59,19 @@ export default class restaurantsService {
         fetch(url)
             .then((response) => response.json())
             .then((res) => {
-                    for(let i=0;i<res.data.length;i++){
-                        let img;
-                        restGoogleMapsService.getRestaurantPhoto(res.data[i]._id).then((res)=> img = res);
-                        this.tabRestaurants.push(
-                            {
-                                nom: res.data[i].name,
-                                cuisine: res.data[i].cuisine,
-                                location : res.data[i].borough,
-                                id: res.data[i]._id,
-                                coord: res.data[i].address.coord,
-                                img : img
-                            }
-                        )
-                    }
-                }
-            )
+                for (let i = 0; i < res.data.length; i++) {
+                            this.tabRestaurants.push(
+                                {
+                                    nom: res.data[i].name,
+                                    cuisine: res.data[i].cuisine,
+                                    location: res.data[i].borough,
+                                    id: res.data[i]._id,
+                                    coord: res.data[i].address.coord
+                                })
+                        }
+                })
             .catch(function (err) {
                 console.log(err);
             });
-        console.log(this.tabRestaurants)
     }
 }

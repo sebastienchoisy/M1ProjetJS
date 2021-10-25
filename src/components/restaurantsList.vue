@@ -21,7 +21,7 @@
     </div>
   </div>
     <el-row :gutter="25">
-      <el-col v-for="(r,index) in restaurants" :key="index" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
+      <el-col v-for="(r,index) in restaurants" :key="index" :xs="8" :sm="6" :md="4" :lg="3">
         <restaurant :restaurant="r"></restaurant>
       </el-col>
     </el-row>
@@ -41,12 +41,7 @@ export default {
   components: {restaurant},
   data:function(){
     return {
-      restaurants: restRestaurantsService.getTabRestaurants(),
-      nom: '',
-      cuisine: '',
-      id: '',
-      address: '',
-      coord: '',
+      restaurants: [],
       pageSize: 16,
       pageNumber: 0,
       restaurantsNumber: 0,
@@ -95,6 +90,10 @@ export default {
     }
   },
   mounted(){
+
+  },
+  beforeMount() {
+    this.restaurants = restRestaurantsService.getTabRestaurants();
   }
 }
 </script>
@@ -121,13 +120,10 @@ form {
 
 .recherche{
   margin: auto;
-  /*max-width: 40%;*/
   max-width: 100%;
   height: 235px;
   background-repeat: no-repeat;
-  /*background-image: url('https://i-sam.unimedias.fr/2018/04/02/istock-865306026.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=591&w=1050');
-*/
-background-image: url('https://img.le-dictionnaire.com/nourriture-plats.jpg');
+  background-image: url('https://img.le-dictionnaire.com/nourriture-plats.jpg');
 
 }
 

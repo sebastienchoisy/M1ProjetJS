@@ -8,12 +8,17 @@ import googleMapsService from "./services/googleMapsService";
 import restaurantsList from "@/components/restaurantsList";
 import restaurantDetails from "@/components/restaurantDetails";
 
+
+
+
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 
+
 export const restRestaurantsService = new restaurantsService();
 export const restGoogleMapsService = new googleMapsService();
+
 const routes = [
   {path: '*', redirect: '/restaurants'},
   {path: '/restaurants',component: restaurantsList},
@@ -25,6 +30,5 @@ const router = new VueRouter({
 
 new Vue({
   render: h => h(App),
-  router,
-  mode: 'history'
+  router
 }).$mount('#app');
