@@ -1,16 +1,25 @@
 <template>
   <div>
     <form @submit.prevent="ajouterRestaurant($event)">
-    <label> Nom </label>
+    <!--<label> Nom </label>
       <input type="text" required v-model="nom" name="nom">
       <label> Cuisine </label>
       <input type="text" required v-model="cuisine" name="cuisine">
-    <button type="submit" class="md-raised">Ajouter</button>
+    <button type="submit" class="md-raised">Ajouter</button>-->
   </form>
-    <label>Rechercher</label>
+
+    <!--<label>Rechercher</label>
     <input type="text" v-model="restaurantNameQuery" class="search">
   <button class="md-raised" type="submit">Rechercher</button>
-  <button class="md-raised" v-on:click="resetQuery">Reset</button>
+  <button class="md-raised" v-on:click="resetQuery">Reset</button>-->
+  <div class="recherche"> 
+    <div class="barre">
+      <el-input placeholder="Trouver un restaurant" suffix-icon="el-icon-knife-fork" v-model="restaurantNameQuery" class="search">
+      </el-input>
+      <el-button type="submit" icon="el-icon-search" class="chercher">Chercher</el-button>
+      <el-button type="Submit" icon="el-icon-delete" class="supprimer"></el-button>
+    </div>
+  </div>
     <el-row :gutter="25">
       <el-col v-for="(r,index) in restaurants" :key="index"  :span="4">
         <restaurant :restaurant="r"></restaurant>
@@ -116,4 +125,32 @@ form {
 .el-col-6 {
   padding:0 !important;
 }
+
+
+.recherche{
+  margin: auto;
+  /*max-width: 40%;*/
+  max-width: 100%;
+  height: 235px;
+  background-repeat: no-repeat;
+  /*background-image: url('https://i-sam.unimedias.fr/2018/04/02/istock-865306026.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=591&w=1050');
+*/
+background-image: url('https://img.le-dictionnaire.com/nourriture-plats.jpg');
+
+}
+
+.barre{
+  margin-top: 20px;
+} 
+
+.search{
+  height : 32px;
+  width: 300px;
+  margin-right: 10px;
+}
+
+.chercher{
+  margin-top: 70px;
+}
+
 </style>
