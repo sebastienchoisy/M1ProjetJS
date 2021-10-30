@@ -7,7 +7,6 @@
       <input type="text" required v-model="cuisine" name="cuisine">
     <button type="submit" class="md-raised">Ajouter</button>-->
   </form>
-
     <!--<label>Rechercher</label>
     <input type="text" v-model="restaurantNameQuery" class="search">
   <button class="md-raised" type="submit">Rechercher</button>
@@ -26,9 +25,9 @@
       </el-col>
     </el-row>
   <div class="queryselector">
-    <input type="range" min="5" max="100" v-model="pageSize" step="5" id="slider">
-    <button class="md-raised" :disabled="pageNumber===0" v-on:click="goPrevious">Précèdent</button>
-    <button class="md-raised" v-on:click="goNext">Suivant</button>
+    <input type="range" min="5" max="100" v-model="pageSize" step="5" class="slider">
+    <a href="#" class="previous round" :disabled="pageNumber===0" v-on:click="goPrevious">&#8249;</a>
+    <a href="#" class="next round" v-on:click="goNext">&#8250;</a>
   </div>
   </div>
 </template>
@@ -140,5 +139,51 @@ form {
 .chercher{
   margin-top: 70px;
 }
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  color: red;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  border-radius: 5px;
+  background: #083b66;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  background-image: url('~@/assets//glace.png');
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+a {
+  margin-top: 30px;
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+.previous {
+  background-color: #083b66;
+  color: white;
+}
+
+.next {
+  background-color: #083b66;
+  color: white;
+}
+
+.round {
+  border-radius: 50%;
+}
+
 
 </style>
