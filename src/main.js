@@ -7,8 +7,7 @@ import restaurantsService from './services/restaurantsService';
 import googleMapsService from "./services/googleMapsService";
 import restaurantsList from "@/components/restaurantsList";
 import restaurantDetails from "@/components/restaurantDetails";
-
-
+import compte from "@/components/compte";
 
 
 Vue.config.productionTip = false;
@@ -22,7 +21,8 @@ export const restGoogleMapsService = new googleMapsService();
 const routes = [
   {path: '*', redirect: '/restaurants'},
   {path: '/restaurants',component: restaurantsList},
-  {path: '/restaurant/:id',component: restaurantDetails}
+  {path: '/restaurant/:id',component: restaurantDetails},
+  {path: '/compte',component: compte}
 ];
 const router = new VueRouter({
   routes

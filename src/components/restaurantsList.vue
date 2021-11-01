@@ -121,7 +121,7 @@ form {
   margin: auto;
   max-width: 100%;
   height: 235px;
-  background-repeat: no-repeat;
+  /*background-repeat: no-repeat;*/
   background-image: url('https://img.le-dictionnaire.com/nourriture-plats.jpg');
 
 }

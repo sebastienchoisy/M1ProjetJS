@@ -10,7 +10,7 @@
        text-color="#083b66"
        active-text-color="#cf1717">
      <el-menu-item index="1"><router-link to="/restaurants">Accueil</router-link></el-menu-item>
-     <el-menu-item index="2">Mon Compte</el-menu-item>
+     <el-menu-item index="2"><router-link to="/compte">Mon Compte</router-link></el-menu-item>
      <el-menu-item index="3">Historique de commandes</el-menu-item>
      <el-menu-item index="3">Ma commande</el-menu-item>
    </el-menu>
