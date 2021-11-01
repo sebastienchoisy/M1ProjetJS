@@ -128,26 +128,11 @@ app.get('/api/restaurants/:id', (req, res) => {
 		});
 });
 
-app.get('/api/restaurants/details/:id', function(req,res) {
-	let id = req.params.id;
-	let api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
-	mongoDBModule.findRestaurantById(id)
-		.then((data) => {
-		let url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cphoto%2Crating%2Copening_hours' +
-			'&input=' + data.restaurant.name + '&inputtype=textquery' +
-			'&locationbias=circle%3A2000%40' + data.restaurant.address.coord[1] + '%2C' + data.restaurant.address.coord[0] + '&key=' + api_key;
-		return fetch(url)
-			.then((response) => response.json())
-			.then((detail) => res.send(detail))
-			.catch(function (err) {
-				console.log(err);
-			});
-	});
-});
 
 app.get('/api/restaurants/photo/:id', function(req,res) {
 	let id = req.params.id;
-	let api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
+	let api_key = '';
+	//AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE
 
 
 	mongoDBModule.findRestaurantById(id)

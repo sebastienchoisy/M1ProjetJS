@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Jewish/Kosher",
+    "items": [{
+      "nom": "Israeli Salade",
+      "prix": 8.50,
+      "url": "test"
+    },
+      {
+        "nom": "Carpaccio de betteraves",
+        "prix": 11,
+        "url": "test"
+      },
+      {
+        "nom": "Aubergine au four",
+        "prix": 10,
+        "url": "test"
+      }
+    ,{
+        "nom": "Houmous Pita",
+        "prix": 6,
+        "url": "test"
+      }
+    ,{
+        "nom": "Falafel maison",
+        "prix": 6.50,
+        "url": "test"
+      }]
+  }
+]
