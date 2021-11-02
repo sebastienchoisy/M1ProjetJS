@@ -26,5 +26,344 @@
         "prix": 6.50,
         "url": "test"
       }]
+  },
+  {
+    "name": "American",
+    "items": [{
+      "nom": "Pancake",
+      "prix": 4.50,
+      "url": "test"
+    },
+      {
+        "nom": "Chili con carne",
+        "prix": 11,
+        "url": "test"
+      },
+      {
+        "nom": "Lobster roll",
+        "prix": 10,
+        "url": "test"
+      }
+    ,{
+        "nom": "Bagels",
+        "prix": 7,
+        "url": "test"
+      }
+    ,{
+        "nom": "Pecan pie",
+        "prix": 5.50,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Delicatessen",
+    "items": [{
+      "nom": "Pâtes fraiches au foie gras aux magrets et aux truffes",
+      "prix": 29,
+      "url": "test"
+    },
+      {
+        "nom": "Tartare de bar au gingembre",
+        "prix": 25,
+        "url": "test"
+      },
+      {
+        "nom": "Magrets de canard aux patates douces et cacao",
+        "prix": 32,
+        "url": "test"
+      }
+    ,{
+        "nom": "Ecrasé de pomme de terre aux truffes",
+        "prix": 17,
+        "url": "test"
+      }
+    ,{
+        "nom": "Hommard grillé",
+        "prix": 25,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Bakery",
+    "items": [{
+      "nom": "Pain au chocolat",
+      "prix": 1.60,
+      "url": "test"
+    },
+      {
+        "nom": "Croissant",
+        "prix": 1.20,
+        "url": "test"
+      },
+      {
+        "nom": "Café",
+        "prix": 1,
+        "url": "test"
+      }
+    ,{
+        "nom": "Tarte aux pommes",
+        "prix": 3,
+        "url": "test"
+      }
+    ,{
+        "nom": "Jus d'orange",
+        "prix": 3.5,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Irish",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Hamburgers",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Cheeseburger",
+        "prix": 3,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Ice Cream, Gelato, Yogurt, Ices",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Chinese",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Turkish",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Donuts",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Caribbean",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Sandwiches/Salads/Mixed Buffet",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+  },
+  {
+    "name": "Sandwiches/Salads/Mixed Buffet",
+    "items": [{
+      "nom": "Ragoût à l'irlandaise",
+      "prix": 15,
+      "url": "test"
+    },
+      {
+        "nom": "Irish coffee",
+        "prix": 5,
+        "url": "test"
+      },
+      {
+        "nom": "Seeafood Chowder",
+        "prix": 20,
+        "url": "test"
+      }
+    ,{
+        "nom": "SHepherd's pie",
+        "prix": 15,
+        "url": "test"
+      }
+    ,{
+        "nom": "Irish stew",
+        "prix": 17,
+        "url": "test"
+      }]
+      
   }
+  
+  
 ]
