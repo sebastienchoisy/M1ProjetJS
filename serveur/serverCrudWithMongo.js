@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
-const server = require('http').Server(app);
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 // pour les formulaires multiparts
 var multer = require('multer');
@@ -33,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 // Lance le serveur avec express
-server.listen(port);
+app.listen(port);
 console.log("Serveur lancé sur le port : " + port);
 
 //------------------
@@ -81,6 +80,11 @@ app.get('/api/connection', (req, res) => {
 			res.send(JSON.stringify(reponse));
 		});
 });
+
+app.post('/api/users/register',(req,res) => {
+	mongoDBModule.registerNewUser(req,res)
+		.then((data)=>res.send(data));
+})
 
 app.get('/api/restaurants/count', (req, res) => {
 	// Pour le moment on simule, mais après on devra
