@@ -70,8 +70,14 @@ export default class restaurantsService {
                                 })
                         }
                 })
+                
             .catch(function (err) {
                 console.log(err);
             });
+    }
+
+    setRestaurantNameQuery(query){
+        this.restaurantNameQuery = query;
+       console.log(query)
     }
 }

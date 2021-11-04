@@ -15,8 +15,8 @@
     <div class="barre">
       <el-input placeholder="Trouver un restaurant" suffix-icon="el-icon-knife-fork" v-model="restaurantNameQuery" class="search">
       </el-input>
-      <el-button type="submit" icon="el-icon-search" class="chercher">Chercher</el-button>
-      <el-button type="Submit" icon="el-icon-delete" class="supprimer"></el-button>
+      <el-button type="submit" icon="el-icon-search" class="chercher" v-on:click="rechercherRestaurant">Chercher</el-button>
+      <el-button type="Submit" icon="el-icon-delete" class="supprimer" v-on:click="resetQuery"></el-button>
     </div>
   </div>
     <el-row :gutter="25">
@@ -61,6 +61,10 @@ export default {
       this.restaurantNameQuery = '';
       this.restaurants = restRestaurantsService.getRestaurantsFromServer();
     },
+    rechercherRestaurant(){
+      restRestaurantsService.setRestaurantNameQuery(this.restaurantNameQuery);
+      this.restaurants = restRestaurantsService.getTabRestaurants();  
+    },
     goNext(){
       this.pageNumber++;
       restRestaurantsService.setPageNumber(this.pageNumber);
@@ -79,6 +83,7 @@ export default {
         this.restaurants = restRestaurantsService.getTabRestaurants();
       }
     },
+    
   },
   watch: {
     pageSize: function (val) {

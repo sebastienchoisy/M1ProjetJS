@@ -1,5 +1,7 @@
 <template>
     <div>
+    <el-button type="primary" class="md-raised" >Ajouter un restaurant</el-button>
+    <br>
         <div class="information">
 
             <el-col :span="12" :offset="6" class="carré" >
@@ -89,6 +91,7 @@
 
 .carré{
     border:solid #2c3e50 2px;
+    margin-top:30px;
 }
 
 
@@ -125,6 +128,10 @@
     background-color:white;
 }
 
+.md-raised{
+    background-color:#2c3e50 ;
+    border-color:#2c3e50 ;
+}
 
 
 </style>

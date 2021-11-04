@@ -1,8 +1,47 @@
 <template>
  <div>
-   <el-main>
-     <el-row>
-       <el-col v-if="restaurant" :span="12" :offset="6">
+  
+  <el-col :span="12" :offset="6" class="carré" >
+                <el-row >
+                    <el-col class="détails" v-if="restaurant">
+                        {{this.restaurant.name}}
+                    </el-col>
+                </el-row>
+                <el-row >
+                    <el-col class="col">
+                        <div class="gauche1">{{this.restaurant.cuisine}}</div>
+                        <div class="prénom" ><el-image :src="photo"></el-image></div>
+                    </el-col>
+                </el-row> 
+                <el-row >
+                    <el-col class="col">
+                        <div class="gauche1">Adresse</div>
+                        <div class="email" > {{this.restaurant.address.building+' '+this.restaurant.address.street}} {{this.restaurant.borough}}</div>
+                    </el-col>
+                    <el-col class="col">
+                        <div class="droite1">Menu</div>
+                            <el-row style="background-color:white;">
+                              <el-col class="col" :span="8">
+                                <el-row>
+                                  <div class="gauche1">PHOTO</div>
+                                  <div class="prénom" v-for="user in menu" :key="user.id"><el-image :src="user.url"></el-image></div>
+                                </el-row>
+                              </el-col>
+                              <el-col class="col" :span="8">
+                                <div class="droite1">PLAT</div>
+                                <div class="taille"  v-for="user in menu" :key="user.id"> {{user.nom}}  </div>
+                              </el-col>
+                              <el-col class="col" :span="8">
+                                <div class="droite1">PRIX</div>
+                                <div class="taille"  v-for="user in menu" :key="user.id"><a class="prix"> {{user.prix}}€ </a></div>
+                              </el-col>
+                            </el-row> 
+                    </el-col>
+                </el-row>   
+            </el-col>
+   <!--<el-main>
+     <el-row>-->
+       <!--<el-col v-if="restaurant" :span="12" :offset="6">
          <el-row class="blue-container">
            <el-col :span="12"><el-image :src="photo"></el-image></el-col>
            <el-col :span="12"> <div class="details-container">
@@ -12,7 +51,7 @@
              <span> {{this.restaurant.borough}}</span>
              <li v-for="user in menu" :key="user.id">
                {{user.nom}}
-             </li>
+             </li >
              <gmap-map v-if="center.lat !== '' && center.lng !== ''"
                  :center="center"
                  :zoom="10"
@@ -20,9 +59,14 @@
              </gmap-map>
            </div></el-col>
          </el-row>
-       </el-col>
-     </el-row>
-   </el-main>
+       </el-col>-->
+    <!-- </el-row>
+   </el-main>-->
+    <gmap-map v-if="center.lat !== '' && center.lng !== ''"
+                 :center="center"
+                 :zoom="10"
+                 style="width:350px;  height: 400px;"><gmap-marker :position="center" :label="label"></gmap-marker>
+             </gmap-map>
  </div>
 </template>
 
@@ -60,6 +104,7 @@ export default {
         if(menusData[i].name === this.restaurant.cuisine) {
           this.menu = menusData[i].items;
         }
+        console.log(this.menu)
       }
     },
   },
@@ -87,11 +132,16 @@ h1 {
   flex-direction: column;
   padding:1%;
 }
-.el-image {
-  height:100%;
-  width:100%;
-  border-radius: 40px;
-  border: solid 3px #cf1717;
-  max-height:260px;
+
+.image{
+  width:150px;
 }
+
+.taille{
+  padding: 40px;
+  background-color:white;
+  height: 133.391px;
+}
+
+
 </style>
