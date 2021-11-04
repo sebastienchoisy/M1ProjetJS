@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <TopMenu></TopMenu>
+    <headerContainer></headerContainer>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import TopMenu from "@/components/TopMenu";
+import headerContainer from "@/components/headerContainer";
 
 export default {
   name: 'App',
-  components: {TopMenu,
+  components: {
+    headerContainer,
   }
 }
 </script>

@@ -1,0 +1,24 @@
+import {authHeader} from "@/helpers/authHeader";
+
+const API_URL = 'http://localhost:8080/api/user/';
+
+export default class UserService {
+
+    update(user) {
+        /*TODO*/
+    }
+
+    getDetails(username) {
+        return fetch(API_URL + 'details', {
+            method: "POST",
+            headers: authHeader(),
+            body: JSON.stringify(username)
+        })
+            .then(response => {
+                return response;
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+    }
+}

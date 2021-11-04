@@ -1,4 +1,4 @@
-export default class googleMapsService {
+export default class googleService {
 
     getRestaurantDetails(id){
         let url = 'http://localhost:8080/api/restaurants/details/'+id

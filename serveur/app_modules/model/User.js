@@ -1,58 +1,54 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userSchema = mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
-        required: [true, "Please Include your name"]
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
     },
     email: {
         type: String,
-        required: [true, "Please Include your email"]
+        required: true
     },
     password: {
         type: String,
-        required: [true, "Please Include your password"]
+        required: true
     },
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true
-            }
-        }
-    ]
-});
-
-//this method will hash the password before saving the user model
-userSchema.pre("save", async function(next) {
-    const user = this;
-    if (user.isModified("password")) {
-        user.password = await bcrypt.hash(user.password, 8);
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    token: {
+        type: String,
+        required: true
+    },
+    restaurants: {
+        type: Array,
     }
-    next();
 });
 
-//this method generates an auth token for the user
+// On génère un Token
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email },
-        "secret");
-    user.tokens = user.tokens.concat({ token })
+    const token = jwt.sign({username: user.username},
+        "bigmac",{expiresIn: '2h'});
+    user.token = token;
     return token;
-};
-
-//this method search for a user by email and password.
-userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email });
-    if (!user) {
-        throw new Error({ error: "Invalid login details" });
-    }
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-        throw new Error({ error: "Invalid login details" });
-    }
-    return user;
 };
 
 const User = mongoose.model("User", userSchema);

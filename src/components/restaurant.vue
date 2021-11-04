@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {restGoogleMapsService} from "../main";
+import {GoogleMapsService} from "../main";
 const defaultPhoto = require('../assets/imgresto.png');
 export default {
   name: "restaurant",
@@ -31,10 +31,10 @@ export default {
   },
   methods : {
     getDetails(id){
-      restGoogleMapsService.getRestaurantDetails(id);
+      GoogleMapsService.getRestaurantDetails(id);
     },
     getPhoto(id){
-      restGoogleMapsService.getRestaurantPhoto(id)
+      GoogleMapsService.getRestaurantPhoto(id)
           .then((photo) => {
             if(photo !== 'photo introuvable'){
               this.photo = photo;
@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted: function(){
-    this.getPhoto(this.restaurant.id);
+    //this.getPhoto(this.restaurant.id);
   }
 }
 </script>

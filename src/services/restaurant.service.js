@@ -1,6 +1,6 @@
 
 
-export default class restaurantsService {
+export default class restaurantService {
     tabRestaurants = [];
     pageNumber = 0;
     pageSize = 16;
@@ -9,6 +9,9 @@ export default class restaurantsService {
     getTabRestaurants(){
         this.getRestaurantsFromServer();
         return this.tabRestaurants;
+    }
+    setRestaurantNameQuery(query){
+        this.restaurantNameQuery = query;
     }
     setPageNumber(pagenumber){
         this.pageNumber = pagenumber;
@@ -74,10 +77,5 @@ export default class restaurantsService {
             .catch(function (err) {
                 console.log(err);
             });
-    }
-
-    setRestaurantNameQuery(query){
-        this.restaurantNameQuery = query;
-       console.log(query)
     }
 }

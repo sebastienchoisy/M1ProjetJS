@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {restGoogleMapsService, restRestaurantsService} from "@/main";
+import {GoogleMapsService, RestaurantsService} from "@/main";
 import menusData from "../assets/menus.json";
 
 export default {
@@ -90,14 +90,14 @@ export default {
   },
   methods: {
     getDetails() {
-      restRestaurantsService.getRestaurantFromId(this.$route.params.id).then((res) =>{
+      RestaurantsService.getRestaurantFromId(this.$route.params.id).then((res) =>{
         this.restaurant = res.restaurant;
         this.center.lat = this.restaurant.address.coord[1];
         this.center.lng = this.restaurant.address.coord[0];
         this.label = {'text': this.restaurant.name, 'color': 'white'};
         this.getMenu();
       });
-      restGoogleMapsService.getRestaurantPhoto(this.$route.params.id).then((res) => this.photo = res);
+      GoogleMapsService.getRestaurantPhoto(this.$route.params.id).then((res) => this.photo = res);
     },
     getMenu(){
       for(let i=0;i<menusData.length;i++){

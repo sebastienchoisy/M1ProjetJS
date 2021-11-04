@@ -81,10 +81,6 @@ app.get('/api/connection', (req, res) => {
 		});
 });
 
-app.post('/api/users/register',(req,res) => {
-	mongoDBModule.registerNewUser(req,res)
-		.then((data)=>res.send(data));
-})
 
 app.get('/api/restaurants/count', (req, res) => {
 	// Pour le moment on simule, mais après on devra
@@ -135,7 +131,7 @@ app.get('/api/restaurants/:id', (req, res) => {
 
 app.get('/api/restaurants/photo/:id', function(req,res) {
 	let id = req.params.id;
-	let api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
+	let api_key = '';
 	//AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE
 
 
@@ -201,4 +197,42 @@ app.delete('/api/restaurants/:id', (req, res) => {
 			res.send(JSON.stringify(data));
 		});
 })
+
+
+app.post('/api/auth/register',(req,res) => {
+	mongoDBModule.registerNewUser(req,res)
+		.then((data)=>res.send(JSON.stringify(data)));
+})
+
+app.post('/api/auth/login',(req,res) => {
+	mongoDBModule.login(req,res)
+		.then((data)=>res.send(JSON.stringify(data)));
+})
+
+app.get('/api/user/details',(req,res)=> {
+	mongoDBModule.getUserDetails(req,res)
+		.then((data)=> res.send(JSON.stringify(data)));
+})
+
+app.get('/api/user/addRestaurant',(req,res)=> {
+	mongoDBModule.addUserRestaurant(req,res)
+		.then((data)=> res.send(JSON.stringify(data)));
+})
+
+app.get('/api/user/removeRestaurant',(req,res)=> {
+	mongoDBModule.removeUserRestaurant(req,res)
+		.then((data)=> res.send(JSON.stringify(data)));
+})
+
+app.get('/api/orders/register',(req,res)=> {
+	mongoDBModule.registerNewOrder(req,res)
+		.then((data)=> res.send(JSON.stringify(data)));
+})
+
+app.get('/api/orders/details',(req,res)=> {
+	mongoDBModule.getOrdersDetails(req,res)
+		.then((data)=> res.send(JSON.stringify(data)));
+})
+
+
 

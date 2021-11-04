@@ -13,21 +13,21 @@
                 <el-row >
                     <el-col class="col" :span="12">
                         <div class="gauche1">Prénom</div>
-                        <div class="prénom" ><a> XXXXXXXX </a></div>
+                        <div class="prénom" ><a> {{ User.name }} </a></div>
                     </el-col>
                     <el-col class="col" :span="12">
                         <div class="droite1">Nom</div>
-                        <div class="nom" > XXXX </div>
+                        <div class="nom" > {{ User.lastname }} </div>
                     </el-col>
                 </el-row> 
                 <el-row >
                     <el-col class="col" :span="12">
                         <div class="gauche1">Email</div>
-                        <div class="email" > xxxx@homtail.com </div>
+                        <div class="email" > {{ User.email }} </div>
                     </el-col>
                     <el-col class="col" :span="12">
                         <div class="droite1">Téléphone Mobile</div>
-                        <div class="télephone" > XX XX XX XX XX </div>
+                        <div class="télephone" > {{ User.phoneNumber }} </div>
                     </el-col>
                 </el-row>   
             </el-col>
@@ -39,7 +39,7 @@
             <el-col :span="12" :offset="6" class="carré" >
                 <el-row >
                     <el-col class="adresse">
-                        Adresse
+                      {{ User.address }}
                     </el-col>
                 </el-row>
                 <el-row >
@@ -85,6 +85,23 @@
 
 <script>
 
+
+
+import {User} from "@/models/user.model";
+
+export default {
+  name: "compte",
+  data() {
+    return {
+      user : new User(),
+    };
+  },
+  computed: {
+    User(){
+      return this.$store.state.auth.user;
+    }
+  },
+}
 </script>
 
 <style>
