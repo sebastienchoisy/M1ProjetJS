@@ -20,7 +20,7 @@
                           <gmap-map v-if="center.lat !== '' && center.lng !== ''" :center="center" :zoom="10" style="width:100%;  height: 300px;">
                             <gmap-marker :position="center" :label="label"></gmap-marker>
                         </gmap-map>
-                          <div class="margin-top-5">
+                          <div class="address">
                             {{restaurant.address.building+' '+restaurant.address.street}} {{restaurant.borough}}
                           </div>
                         </div>
@@ -98,6 +98,10 @@ h1 {
   display:flex;
   flex-direction: column;
   padding:1%;
+}
+
+.address {
+  margin-top:5%;
 }
 
 .image{
