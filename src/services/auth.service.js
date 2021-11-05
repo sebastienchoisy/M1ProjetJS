@@ -8,9 +8,11 @@ class AuthService {
             body: JSON.stringify({"username":user.username,"password":user.password}),
             headers: new Headers({'content-type': 'application/json'})
         }).then((response)=> response.json())
-            .then((user) => {
-                localStorage.setItem('user',JSON.stringify(user));
-                return user;
+            .then((response) => {
+                if(response !== 'mauvais mot de passe') {
+                    localStorage.setItem('user', JSON.stringify(response));
+                    return response;
+                }
             })
             .catch(function (err) {
                 console.log(err)

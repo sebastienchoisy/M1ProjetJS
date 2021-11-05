@@ -34,7 +34,8 @@
 
 <script>
 import restaurant from "./restaurant"
-import {RestaurantsService,GoogleMapsService} from "../main";
+import restaurantService from "../services/restaurant.service";
+import googleService from "../services/google.service";
 export default {
   name: "restaurantsList",
   components: {restaurant},
@@ -50,37 +51,37 @@ export default {
   },
   methods: {
     supprimerRestaurant(index) {
-      RestaurantsService.deleteRestaurant(index);
-      this.restaurants = RestaurantsService.getTabRestaurants();
+      restaurantService.deleteRestaurant(index);
+      this.restaurants = restaurantService.getTabRestaurants();
     },
     ajouterRestaurant(event) {
-      RestaurantsService.addRestaurant(event);
-      this.restaurants = RestaurantsService.getTabRestaurants();
+      restaurantService.addRestaurant(event);
+      this.restaurants = restaurantService.getTabRestaurants();
     },
     resetQuery(){
       this.restaurantNameQuery = '';
-      this.restaurants = RestaurantsService.getRestaurantsFromServer();
+      this.restaurants = restaurantService.getRestaurantsFromServer();
     },
     rechercherRestaurant(){
-      RestaurantsService.setRestaurantNameQuery(this.restaurantNameQuery);
-      this.restaurants = RestaurantsService.getTabRestaurants();
+      restaurantService.setRestaurantNameQuery(this.restaurantNameQuery);
+      this.restaurants = restaurantService.getTabRestaurants();
     },
     goNext(){
       this.pageNumber++;
-      RestaurantsService.setPageNumber(this.pageNumber);
-      this.restaurants = RestaurantsService.getTabRestaurants();
+      restaurantService.setPageNumber(this.pageNumber);
+      this.restaurants = restaurantService.getTabRestaurants();
     },
     getDetails(id){
-      GoogleMapsService.getRestaurantDetails(id);
+      googleService.getRestaurantDetails(id);
     },
     getPhoto(id){
-      this.photo = GoogleMapsService.getRestaurantPhoto(id);
+      this.photo = googleService.getRestaurantPhoto(id);
     },
     goPrevious(){
       if(this.pageNumber>0){
         this.pageNumber--;
-        RestaurantsService.setPageNumber(this.pageNumber);
-        this.restaurants = RestaurantsService.getTabRestaurants();
+        restaurantService.setPageNumber(this.pageNumber);
+        this.restaurants = restaurantService.getTabRestaurants();
       }
     },
     
@@ -88,8 +89,8 @@ export default {
   watch: {
     pageSize: function (val) {
       if (val) {
-        RestaurantsService.setPageSize(this.pageSize);
-        this.restaurants = RestaurantsService.getTabRestaurants();
+        restaurantService.setPageSize(this.pageSize);
+        this.restaurants = restaurantService.getTabRestaurants();
       }
     }
   },
@@ -97,7 +98,7 @@ export default {
 
   },
   beforeMount() {
-    this.restaurants = RestaurantsService.getTabRestaurants();
+    this.restaurants = restaurantService.getTabRestaurants();
   }
 }
 </script>

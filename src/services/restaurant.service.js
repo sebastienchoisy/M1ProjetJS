@@ -1,6 +1,6 @@
 
 
-export default class restaurantService {
+class restaurantService {
     tabRestaurants = [];
     pageNumber = 0;
     pageSize = 16;
@@ -75,3 +75,5 @@ export default class restaurantService {
             });
     }
 }
+
+export default new restaurantService();

@@ -212,11 +212,6 @@ app.post('/api/auth/login',(req,res) => {
 		.then((data)=>res.send(JSON.stringify(data)));
 })
 
-app.get('/api/user/details',(req,res)=> {
-	mongoDBModule.getUserDetails(req,res)
-		.then((data)=> res.send(JSON.stringify(data)));
-})
-
 app.get('/api/user/addRestaurant',(req,res)=> {
 	mongoDBModule.addUserRestaurant(req,res)
 		.then((data)=> res.send(JSON.stringify(data)));

@@ -13,8 +13,10 @@ export const auth = {
         login({ commit }, user) {
             return AuthService.login(user).then(
                 user => {
-                    commit('loginSuccess', user);
-                    return Promise.resolve(user);
+                    if(localStorage.getItem('user')){
+                        commit('loginSuccess', user);
+                        return Promise.resolve(user);
+                    }
                 },
                 error => {
                     commit('loginFailure');

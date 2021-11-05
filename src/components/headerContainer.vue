@@ -18,10 +18,13 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="logIn" >Se connecter</el-button>
-          <el-button >Annuler</el-button>
+          <el-button @click="closeDialog()" >Annuler</el-button>
         </el-form-item>
         <el-form-item>
-          <router-link to="/register"><el-link v-on:click="dialogVisible=false" :underline="false" icon="el-icon-user"> Inscrivez vous maintenant !</el-link></router-link>
+          <span>{{message}}</span>
+        </el-form-item>
+        <el-form-item>
+          <router-link to="/register"><el-link v-on:click="closeDialog()" :underline="false" icon="el-icon-user"> Inscrivez vous maintenant !</el-link></router-link>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -47,6 +50,7 @@
 <script>
 
 import {User} from "@/models/user.model";
+import {message} from "@/helpers/message.enum";
 
 export default {
   name: "headerContainer",
@@ -54,6 +58,7 @@ export default {
     return {
       user : new User(),
       dialogVisible: false,
+      message: '',
       activeIndex: '',
       name:'',
       password:''
@@ -82,6 +87,7 @@ export default {
             this.$router.push({path:'/compte'});
             this.activeIndex = key;
           } else {
+            this.message = message.LOGGINTOACCESSPROFILE;
             this.dialogVisible = true;
           }
       } else if (key === '3' && this.$route.path !== '/orders'){
@@ -89,23 +95,30 @@ export default {
           this.$router.push({path:'/orders'});
           this.activeIndex = key;
         } else {
+          this.message = message.LOGGINTOACCESSORDERS;
           this.dialogVisible = true;
         }
       }
+    },
+    closeDialog(){
+      this.dialogVisible = false;
+      this.message = '';
     },
     logIn(){
       this.$store.dispatch('auth/login',this.user)
           .then( () => {
               this.$store.dispatch('order/getOrders',this.user.username);
-              this.$router.push({path:'/compte'});
               this.dialogVisible = false;
+              if(this.$route.path === '/register'){
+                this.$router.push({path: '/restaurants'});
+              }
               this.getActiveIndex();
       });
     },
     logOut(){
       this.$store.dispatch('auth/logout');
       this.$store.dispatch('order/cleanOrders');
-      if(this.$route.path !== '/restaurants') {
+      if(this.$route.path === '/orders' || this.$route.path === '/compte') {
         this.$router.push({path: '/restaurants'});
         this.getActiveIndex();
       }

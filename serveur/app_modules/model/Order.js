@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-    status: {
-        type: String,
-        required: true
-    },
     restaurantName: {
         type: String,
         required: true
@@ -22,10 +18,6 @@ const userSchema = mongoose.Schema({
         required: true
     },
     totalCost: {
-        type: String,
-        required: true
-    },
-    paymentMethod: {
         type: String,
         required: true
     }

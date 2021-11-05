@@ -7,12 +7,11 @@
       <template slot-scope="props">
       <div>
         <el-descriptions title="Détail de la commande">
-            <el-descriptions-item label="Etat">{{ props.row.status }}</el-descriptions-item>
-            <el-descriptions-item label="Address">{{ props.row.customerName }}</el-descriptions-item>
+            <el-descriptions-item><div v-for="item in props.row.items" :key="item.id">
+              Plat: {{ item.nom }} --- Prix: {{ item.prix }}
+            </div></el-descriptions-item>
         </el-descriptions>
-        <div v-for="item in props.row.items" :key="item.id">
-           Plat: {{ item.nom }} --- Prix: {{ item.prix }} 
-        </div>
+
       </div>
      </template>
     </el-table-column>

@@ -6,8 +6,6 @@ import VueJWT from 'vuejs-jwt';
 import store from './store';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
-import restaurantService from './services/restaurant.service';
-import googleService from "./services/google.service";
 import restaurantsList from "@/components/restaurantsList";
 import restaurantDetails from "@/components/restaurantDetails";
 import compte from "@/components/compte";
@@ -27,10 +25,6 @@ Vue.use(VueGoogleMaps, {
     //key: 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE'
   }
 });
-
-
-export const RestaurantsService = new restaurantService();
-export const GoogleMapsService = new googleService();
 
 
 const routes = [

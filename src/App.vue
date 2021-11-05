@@ -18,8 +18,12 @@ export default {
 </script>
 
 <style>
+
+body {
+  font-family: "Trebuchet MS"
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Trebuchet MS";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

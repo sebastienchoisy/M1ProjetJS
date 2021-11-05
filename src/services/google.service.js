@@ -1,4 +1,4 @@
-export default class googleService {
+class googleService {
 
     getRestaurantDetails(id){
         let url = 'http://localhost:8080/api/restaurants/details/'+id
@@ -21,3 +21,5 @@ export default class googleService {
         return photoURL;
     }
 }
+
+export default new googleService();

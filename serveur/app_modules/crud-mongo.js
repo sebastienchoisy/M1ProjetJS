@@ -3,6 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 const jwt = require("jsonwebtoken");
 const Order = require("./model/Order");
+const bcrypt = require('bcryptjs');
 
 //var url = 'mongodb://localhost:27017/test';
 
@@ -250,6 +251,7 @@ exports.registerNewOrder = async (req) => {
 		} else {
 			let isAuthVerified;
 			let token = req.headers["x-access-token"];
+
 			jwt.verify(token,"bigmac",(err,decoded)=> {
 				if (err) {
 					return err;
@@ -259,19 +261,15 @@ exports.registerNewOrder = async (req) => {
 			})
 			if(isAuthVerified) {
 				const order = new Order({
-					id: req.body.id,
-					status: req.body.status,
 					restaurantName: req.body.restaurantName,
 					customerName: req.body.customerName,
 					date: new Date(req.body.date),
 					items: req.body.items,
 					totalCost: req.body.totalCost,
-					paymentMethod: req.body.paymentMethod
 				});
-				let idOrder;
-				await db.collection("orders").insertOne(order).then((result)=> idOrder = result.insertedId);
+				await db.collection("orders").insertOne(order);
 				await client.close();
-				return 'Commande enregistrée'+idOrder;
+				return 'Commande enregistrée';
 			} else {
 				return 'Problème d\'authentification (API KEY)';
 			}
@@ -322,7 +320,7 @@ exports.registerNewUser = async (req) => {
 				name: req.body.name,
 				lastname: req.body.lastname,
 				email: req.body.email,
-				password: req.body.password,
+				password: bcrypt.hashSync(req.body.password,10),
 				phoneNumber: req.body.phoneNumber,
 				address: req.body.address,
 				type: req.body.type,
@@ -340,47 +338,41 @@ exports.registerNewUser = async (req) => {
 exports.login = async (req) => {
 	let client = await MongoClient.connect(url, { useNewUrlParser: true });
 	let db = client.db(dbName);
+	let password;
 	try {
-		if(await db.collection("users").findOne({'username': req.body.username})) {
-			const user = new User({
-				username: req.body.username
-			});
-			const token = await user.generateAuthToken();
-			let newToken = {
-				$set: {
-					token: token
-				}
-			};
-			await db.collection("users").updateOne({'username': req.body.username},newToken)
-			return await db.collection("users").findOne({'username': req.body.username});
+		if(await db.collection("users").findOne({'username': req.body.username}).then((user)=> password = user.password)) {
+			if(bcrypt.compareSync(req.body.password,password)) {
+				const user = new User({
+					username: req.body.username
+				});
+				const token = await user.generateAuthToken();
+				let newToken = {
+					$set: {
+						token: token
+					}
+				};
+				await db.collection("users").updateOne({'username': req.body.username}, newToken)
+				let verifiedUser;
+				await db.collection("users").findOne({username: req.body.username}).then((user)=> verifiedUser = user);
+				return new User({
+					username: verifiedUser.username,
+					name: verifiedUser.name,
+					lastname: verifiedUser.lastname,
+					email: verifiedUser.email,
+					phoneNumber: verifiedUser.phoneNumber,
+					address: verifiedUser.address,
+					type: verifiedUser.type,
+					restaurants: verifiedUser.restaurants,
+					token: verifiedUser.token
+				})
+			} else {
+				await client.close();
+				return 'mauvais mot de passe';
+			}
 		} else {
 			await client.close();
 			return 'Ce compte n\'existe pas';
 		}
-	} catch(err) {
-		return err;
-	}
-}
-
-exports.getUserDetails = async (req) => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let isAuthVerified;
-	try {
-		let token = req.headers["x-access-token"];
-		jwt.verify(token,"bigmac",(err,decoded)=> {
-			if (err) {
-				return err;
-			} else if (req.body.username === decoded.username) {
-				isAuthVerified = true;
-			}
-		})
-		if (isAuthVerified) {
-			return db.collection("users").findOne({username: req.body.username});
-		} else {
-			return "Problème d'authentification"
-		}
-
 	} catch(err) {
 		return err;
 	}

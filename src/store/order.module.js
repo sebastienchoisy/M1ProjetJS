@@ -3,7 +3,7 @@ import OrderService from '../services/order.service';
 
 export const order = {
     namespaced: true,
-    state: {orders:null},
+    state: {orders:['k']},
     actions: {
         getOrders({ commit },username) {
             return OrderService.getOrdersForUser(username).then(
@@ -19,6 +19,13 @@ export const order = {
         },
         cleanOrders({commit}){
             commit('cleaningOrdersSuccess');
+        },
+        sendOrder({commit},order){
+            return OrderService.sendOrder(order).then(()=>{
+                order.date = (new Date(order.date)).toLocaleDateString();
+                commit('orderAddSuccess',order);
+            })
+
         }
     },
     mutations: {
@@ -26,17 +33,10 @@ export const order = {
             state.orders = orders;
         },
         cleaningOrdersSuccess(state) {
-            state.orders = null;
+            state.orders = [];
         },
-        logout(state) {
-            state.status.loggedIn = false;
-            state.user= null;
-        },
-        registerSuccess(state) {
-            state.status.loggedIn = false;
-        },
-        registerFailure(state) {
-            state.status.loggedIn = false;
+        orderAddSuccess(state,order) {
+            state.orders.push(order);
         }
     }
 };
