@@ -39,15 +39,11 @@ export default class restaurantService {
             });
     }
 
-    addRestaurant(event) {
-        console.log(event)
-        event.preventDefault();
-        let form = event.target;
-        let formData = new FormData(form);
+    addRestaurant() {
         let url = "http://localhost:8080/api/restaurants";
         fetch(url, {
             method: "POST",
-            body: formData
+            body: 'formData'
         })
             .then((response) => response.json())
             .then((res) => console.log(res))

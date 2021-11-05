@@ -1,65 +1,51 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="SubmitForm" class="form-container">
+  <div v-if="!isRegistered" class="form-container">
+    <el-form label-width="120px">
       <el-row>
-        <el-col :span="6">
-        <el-input placeholder="Nom" v-model="name"></el-input>
-        </el-col>
-        <el-col :span="6">
-        <el-input placeholder="Prénom"  v-model="prenom"></el-input>
-        </el-col>
+        <el-col :span="10"><el-input placeholder="Pseudo" v-model="user.username"></el-input></el-col>
+        <el-col :offset="4" :span="10"><el-input placeholder="Mot de passe" v-model="user.password" show-password></el-input></el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
-            <el-input placeholder="Numéro de téléphone" v-model="telephone"></el-input>
-        </el-col>
-        <el-col :span="6">
-            <el-input placeholder="Mot de passe"  v-model="motDePasse"></el-input>
-        </el-col>
+        <el-col :span="10"><el-input placeholder="Prénom" v-model="user.name"></el-input></el-col>
+        <el-col :offset="4" :span="10"><el-input placeholder="Nom" v-model="user.lastname"></el-input></el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
-            <el-input placeholder="Adresse mail" v-model="email"></el-input>
-        </el-col>
-        <el-col :span="6">
-            <button type="submit">Créer un compte</button>
-        </el-col>
+        <el-col :span="10"><el-input placeholder="Téléphone" v-model="user.phoneNumber"></el-input></el-col>
+        <el-col :offset="4" :span="10"><el-input placeholder="Email" v-model="user.email"></el-input></el-col>
       </el-row>
-    </form>
+          <el-radio-group v-model="user.role">
+          <el-radio label="Restaurateur"></el-radio>
+          <el-radio label="Client"></el-radio>
+        </el-radio-group>
+        <el-input placeholder="Adresse" type="textarea" v-model="user.address"></el-input>
+      <el-form-item>
+        <el-button @click="SubmitForm" type="primary" >Créer</el-button>
+        <el-button>Annuler</el-button>
+      </el-form-item>
+    </el-form>
     </div>
+  <div v-else>
+    <span>hello</span>
+  </div>
 </template>
 
 <script>
+import {User} from "@/models/user.model";
+
 export default {
   name: "register",
   data() {
     return {
-        name: '',
-        prenom: '',
-        email: '',
-        motDePasse: '',
-        telephone: '',
+       user: new User(),
+       isRegistered: false,
     };
   },
   methods:{
     SubmitForm(){
-      const data = JSON.stringify({
-        name: this.name,
-        email: this.email,
-        password: this.password
-      })
-      let url = "http://localhost:8080/api/users/register";
-      fetch(url, {
-        method: "POST",
-        body: data,
-        headers: new Headers({'content-type': 'application/json'}),
-      })
-          .then((response) => response.json())
-          .then((res) => console.log(res))
-          .catch(function (err) {
-            console.log(err);
+      this.$store.dispatch('auth/register',this.user)
+          .then( () => {
+              this.isRegistered = true;
           });
-
     }
   }
 }
@@ -67,13 +53,14 @@ export default {
 
 <style scoped>
   .form-container {
-    width:700px;
+    display: flex;
+    justify-content: space-around;
   }
-  .container {
-    width:100%
+  .el-form {
+    width:50%;
+  }
+  .el-input,.el-textarea,.el-radio-group {
+    margin-top: 10%;
   }
 
-  .el-input {
-    padding: 5%;
-  }
 </style>

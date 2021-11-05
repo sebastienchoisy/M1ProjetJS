@@ -1,22 +1,22 @@
 <template>
  <div>
   
-  <el-col :span="12" :offset="6" class="carré" >
+  <el-col v-if="restaurant" :span="12" :offset="6" class="carré" >
                 <el-row >
                     <el-col class="détails" v-if="restaurant">
-                        {{this.restaurant.name}}
+                        {{restaurant.name}}
                     </el-col>
                 </el-row>
                 <el-row >
                     <el-col class="col">
-                        <div class="gauche1">{{this.restaurant.cuisine}}</div>
+                        <div class="gauche1">{{restaurant.cuisine}}</div>
                         <div class="prénom" ><el-image :src="photo"></el-image></div>
                     </el-col>
                 </el-row> 
                 <el-row >
                     <el-col class="col">
                         <div class="gauche1">Adresse</div>
-                        <div class="email" > {{this.restaurant.address.building+' '+this.restaurant.address.street}} {{this.restaurant.borough}}</div>
+                        <div class="email" > {{restaurant.address.building+' '+restaurant.address.street}} {{restaurant.borough}}</div>
                     </el-col>
                     <el-col class="col">
                         <div class="droite1">Menu</div>
@@ -78,7 +78,7 @@ export default {
   name: "restaurantDetails",
   data: function() {
     return {
-      restaurant: null,
+      restaurant: '',
       photo:'',
       menu:'',
       center: {
@@ -104,7 +104,6 @@ export default {
         if(menusData[i].name === this.restaurant.cuisine) {
           this.menu = menusData[i].items;
         }
-        console.log(this.menu)
       }
     },
   },

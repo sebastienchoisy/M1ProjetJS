@@ -328,7 +328,6 @@ exports.registerNewUser = async (req) => {
 				type: req.body.type,
 				restaurants: []
 			});
-
 			await db.collection("users").insertOne(user);
 			await client.close();
 			return 'inscription réussie';
@@ -353,7 +352,7 @@ exports.login = async (req) => {
 				}
 			};
 			await db.collection("users").updateOne({'username': req.body.username},newToken)
-			return await db.collection("users").findOne({username: req.body.username});
+			return await db.collection("users").findOne({'username': req.body.username});
 		} else {
 			await client.close();
 			return 'Ce compte n\'existe pas';

@@ -163,6 +163,7 @@ app.get('/api/restaurants/photo/:id', function(req,res) {
 // Creation d'un restaurant par envoi d'un formulaire
 // On fera l'insert par un POST, c'est le standard REST
 app.post('/api/restaurants', multerData.fields([]), (req, res) => {
+	console.log(req.body)
 	// On supposera qu'on ajoutera un restaurant en 
 	// donnant son nom et sa cuisine. On va donc 
 	// recuperer les données du formulaire d'envoi

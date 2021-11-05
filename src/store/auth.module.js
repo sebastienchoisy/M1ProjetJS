@@ -30,7 +30,7 @@ export const auth = {
             return AuthService.register(user).then(
                 response => {
                     commit('registerSuccess');
-                    return Promise.resolve(response.data);
+                    return Promise.resolve(response);
                 },
                 error => {
                     commit('registerFailure');
@@ -42,6 +42,7 @@ export const auth = {
     mutations: {
         loginSuccess(state, user) {
             state.status.loggedIn = true;
+            console.log('hello')
             state.user = user;
         },
         loginFailure(state) {

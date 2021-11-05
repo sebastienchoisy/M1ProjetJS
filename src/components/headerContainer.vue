@@ -5,25 +5,25 @@
     <el-button v-if="isAuthentified()" @click="logOut">Se Déconnecter</el-button>
     <router-link to="/register"><el-button v-if="!isAuthentified()">S'enregistrer</el-button></router-link>
 
-    <el-dialog class="login-dialog"
+    <el-dialog custom-class="login-dialog"
         title="Connexion"
         :visible.sync="dialogVisible"
-        width="30%"
     >
-      <form @submit.prevent="logIn" class="form-container">
-        <el-row>
-          <el-col :span="12">
-            <el-input placeholder="Nom" v-model="user.username"></el-input>
-          </el-col>
-          <el-col :span="12">
-            <el-input placeholder="Mot de passe"  v-model="user.password" show-password></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <button type="submit">YES</button>
-          <el-link type="primary" v-on:click="goToRegisterPage();dialogVisible=false">Vous n'avez pas encore de compte? Créez en un !</el-link>
-        </el-row>
-      </form>
+      <el-form label-position="left"  status-icon  ref="ruleForm" label-width="120px" class="demo-ruleForm">
+        <el-form-item label="Pseudo" >
+          <el-input type="text" v-model="user.username"></el-input>
+        </el-form-item>
+        <el-form-item label="Confirm" prop="checkPass">
+          <el-input type="password" v-model="user.password" ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="logIn" >Se connecter</el-button>
+          <el-button >Annuler</el-button>
+        </el-form-item>
+        <el-form-item>
+          <router-link to="/register"><el-link v-on:click="dialogVisible=false" :underline="false" icon="el-icon-user"> Inscrivez vous maintenant !</el-link></router-link>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
  <div class="header">
@@ -69,9 +69,11 @@ export default {
       this.$router.push({path:'/register'})
     },
     logIn(){
-      this.$store.dispatch('auth/login',this.user);
-      this.$router.push({path:'/compte'});
-      this.dialogVisible = false;
+      this.$store.dispatch('auth/login',this.user)
+          .then( () => {
+              this.$router.push({path:'/compte'});
+              this.dialogVisible = false;
+      });
     },
     logOut(){
       this.$store.dispatch('auth/logout');
@@ -86,7 +88,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .header {
   display: flex;
@@ -94,10 +96,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.el-dialog {
-  display:flex;
+.login-dialog {
+  display:flex ;
   flex-direction: column;
   align-items: center;
+  min-width: 420px;
+  max-width: 520px;
 }
 .auth-container {
   display: flex;
