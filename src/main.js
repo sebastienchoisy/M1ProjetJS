@@ -12,6 +12,7 @@ import restaurantsList from "@/components/restaurantsList";
 import restaurantDetails from "@/components/restaurantDetails";
 import compte from "@/components/compte";
 import register from "@/components/register";
+import orders from "@/components/orders";
 
 
 
@@ -37,7 +38,8 @@ const routes = [
   {path: '/restaurants',component: restaurantsList},
   {path: '/restaurant/:id',component: restaurantDetails},
   {path: '/compte',component: compte},
-  {path: '/register',component: register}
+  {path: '/register',component: register},
+  {path: '/orders',component: orders}
 ];
 const router = new VueRouter({
   routes

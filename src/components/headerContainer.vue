@@ -9,12 +9,12 @@
         title="Connexion"
         :visible.sync="dialogVisible"
     >
-      <el-form label-position="left"  status-icon  ref="ruleForm" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="Pseudo" >
-          <el-input type="text" v-model="user.username"></el-input>
+      <el-form label-position="top"  status-icon  ref="ruleForm" label-width="70px" class="demo-ruleForm">
+        <el-form-item>
+          <el-input type="text" placeholder="Pseudo" v-model="user.username"></el-input>
         </el-form-item>
-        <el-form-item label="Confirm" prop="checkPass">
-          <el-input type="password" v-model="user.password" ></el-input>
+        <el-form-item prop="checkPass">
+          <el-input type="password" placeholder="Mot de passe" v-model="user.password" ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="logIn" >Se connecter</el-button>
@@ -29,17 +29,16 @@
  <div class="header">
    <img src="~@/assets//eat&joyLogo.png" alt="">
    <el-menu
-       :default-active="activeIndex2"
+       :default-active="activeIndex"
        class="el-menu-demo top-menu"
        mode="horizontal"
        @select="handleSelect"
        background-color="#FFFFFF"
        text-color="#083b66"
        active-text-color="#cf1717">
-     <el-menu-item index="1"><router-link to="/restaurants">Accueil</router-link></el-menu-item>
-     <el-menu-item index="2"><router-link to="/compte">Mon Compte</router-link></el-menu-item>
-     <el-menu-item index="3">Historique de commandes</el-menu-item>
-     <el-menu-item index="3">Ma commande</el-menu-item>
+     <el-menu-item index="1">Accueil</el-menu-item>
+     <el-menu-item index="2">Mon Compte</el-menu-item>
+     <el-menu-item index="3">Mes commandes</el-menu-item>
    </el-menu>
  </div>
   </div>
@@ -55,35 +54,68 @@ export default {
     return {
       user : new User(),
       dialogVisible: false,
-      activeIndex: '1',
-      activeIndex2: '1',
+      activeIndex: '',
       name:'',
       password:''
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    getActiveIndex(){
+      switch(this.$route.path){
+        case '/restaurants':
+          this.activeIndex = '1';
+          break;
+        case '/compte':
+          this.activeIndex = '2';
+          break;
+        case '/orders':
+          this.activeIndex = '3';
+          break;
+      }
     },
-    goToRegisterPage() {
-      this.$router.push({path:'/register'})
+    handleSelect(key) {
+      if(key === '1' && this.$route.path !== '/restaurants'){
+        this.$router.push({path:'/restaurants'});
+        this.activeIndex = key;
+      } else if (key === '2' && this.$route.path !== '/compte'){
+          if(this.isAuthentified()){
+            this.$router.push({path:'/compte'});
+            this.activeIndex = key;
+          } else {
+            this.dialogVisible = true;
+          }
+      } else if (key === '3' && this.$route.path !== '/orders'){
+        if(this.isAuthentified()){
+          this.$router.push({path:'/orders'});
+          this.activeIndex = key;
+        } else {
+          this.dialogVisible = true;
+        }
+      }
     },
     logIn(){
       this.$store.dispatch('auth/login',this.user)
           .then( () => {
+              this.$store.dispatch('order/getOrders',this.user.username);
               this.$router.push({path:'/compte'});
               this.dialogVisible = false;
+              this.getActiveIndex();
       });
     },
     logOut(){
       this.$store.dispatch('auth/logout');
+      this.$store.dispatch('order/cleanOrders');
       if(this.$route.path !== '/restaurants') {
-        this.$router.push({path: '/restaurants'})
+        this.$router.push({path: '/restaurants'});
+        this.getActiveIndex();
       }
     },
     isAuthentified(){
       return this.$store.state.auth.status.loggedIn;
     }
+  },
+  beforeMount() {
+    this.getActiveIndex();
   }
 }
 </script>
@@ -95,6 +127,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 .login-dialog {
   display:flex ;

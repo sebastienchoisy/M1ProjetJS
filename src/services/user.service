@@ -10,9 +10,7 @@ export default class UserService {
 
     getDetails(username) {
         return fetch(API_URL + 'details', {
-            method: "POST",
-            headers: authHeader(),
-            body: JSON.stringify(username)
+            headers: authHeader()
         })
             .then(response => {
                 return response;

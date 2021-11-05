@@ -281,22 +281,22 @@ exports.registerNewOrder = async (req) => {
 	}
 };
 
-exports.getOrdersDetails = async (req) => {
+exports.getOrdersDetails = async (req,username) => {
 	let client = await MongoClient.connect(url, { useNewUrlParser: true });
 	let db = client.db(dbName);
 	try {
-		if(await db.collection("orders").find({'customerName': req.body.username})) {
+		if(await db.collection("orders").find({'customerName': username})) {
 			let isAuthVerified;
 			let token = req.headers["x-access-token"];
 			jwt.verify(token,"bigmac",(err,decoded)=> {
 				if (err) {
 					return err;
-				} else if (req.body.username === decoded.username) {
+				} else if (username === decoded.username) {
 					isAuthVerified = true;
 				}
 			})
 			if(isAuthVerified) {
-				return await db.collection("orders").find({'customerName': req.body.username}).toArray();
+				return await db.collection("orders").find({'customerName': username}).toArray();
 				} else {
 				return 'Problème d\'authentification (API KEY)';
 			}

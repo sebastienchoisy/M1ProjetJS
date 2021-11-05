@@ -27,6 +27,8 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+	res.header("Access-Control-Allow-Headers","*");
+
 
 	next();
 });
@@ -225,13 +227,14 @@ app.get('/api/user/removeRestaurant',(req,res)=> {
 		.then((data)=> res.send(JSON.stringify(data)));
 })
 
-app.get('/api/orders/register',(req,res)=> {
+app.post('/api/orders/register',(req,res)=> {
 	mongoDBModule.registerNewOrder(req,res)
 		.then((data)=> res.send(JSON.stringify(data)));
 })
 
-app.get('/api/orders/details',(req,res)=> {
-	mongoDBModule.getOrdersDetails(req,res)
+app.get('/api/orders/details/:username',(req,res)=> {
+	let user = req.params.username;
+	mongoDBModule.getOrdersDetails(req,user)
 		.then((data)=> res.send(JSON.stringify(data)));
 })
 

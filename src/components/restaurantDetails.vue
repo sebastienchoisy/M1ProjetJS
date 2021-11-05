@@ -16,7 +16,11 @@
                 <el-row >
                     <el-col class="col">
                         <div class="gauche1">Adresse</div>
-                        <div class="email" > {{restaurant.address.building+' '+restaurant.address.street}} {{restaurant.borough}}</div>
+                        <div class="email" >    <gmap-map v-if="center.lat !== '' && center.lng !== ''"
+                                                          :center="center"
+                                                          :zoom="10"
+                                                          style="width:250px;  height: 300px;"><gmap-marker :position="center" :label="label"></gmap-marker>
+                        </gmap-map> {{restaurant.address.building+' '+restaurant.address.street}} {{restaurant.borough}}</div>
                     </el-col>
                     <el-col class="col">
                         <div class="droite1">Menu</div>
@@ -62,11 +66,7 @@
        </el-col>-->
     <!-- </el-row>
    </el-main>-->
-    <gmap-map v-if="center.lat !== '' && center.lng !== ''"
-                 :center="center"
-                 :zoom="10"
-                 style="width:350px;  height: 400px;"><gmap-marker :position="center" :label="label"></gmap-marker>
-             </gmap-map>
+
  </div>
 </template>
 
