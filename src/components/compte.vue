@@ -3,7 +3,6 @@
     <el-button type="primary" class="md-raised" >Ajouter un restaurant</el-button>
     <br>
         <div class="information">
-
             <el-col :span="12" :offset="6" class="carré" >
                 <el-row >
                     <el-col class="détails">
@@ -32,9 +31,7 @@
                 </el-row>   
             </el-col>
         </div>
-
         <el-row class="espace"></el-row>
-
         <div>
             <el-col :span="12" :offset="6" class="carré" >
                 <el-row >
@@ -46,27 +43,16 @@
                     <el-col class="col">
                         <div class="adr" ><a>{{ User.address }}</a></div>
                     </el-col>
-
                 </el-row> 
             </el-col>
         </div>
-
-        <el-row class="espace"></el-row>
-
-        
-
+        <el-row class="espace"></el-row>  
     </div>
-
-    
-
 </template>
 
+
 <script>
-
-
-
 import {User} from "@/models/user.model";
-
 export default {
   name: "compte",
   data() {
@@ -83,14 +69,11 @@ export default {
 </script>
 
 <style>
-
 .carré{
     border:solid #2c3e50 2px;
     margin-top:30px;
     border-radius: 10px;
 }
-
-
 
 .espace{
     padding: 80px;
@@ -142,6 +125,4 @@ export default {
     background-color:#2c3e50 ;
     border-color:#2c3e50 ;
 }
-
-
 </style>

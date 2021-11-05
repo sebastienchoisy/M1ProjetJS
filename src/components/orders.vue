@@ -6,11 +6,15 @@
     <el-table-column type="expand">
       <template slot-scope="props">
       <div>
-        <p class="etat">État: {{ props.row.status }}</p> 
-        <p>Détail de la commande: {{ props.row.items }}</p>
-        <p>Adresse: {{ props.row.customerName }}</p>
+        <el-descriptions title="Détail de la commande">
+            <el-descriptions-item label="Etat">{{ props.row.status }}</el-descriptions-item>
+            <el-descriptions-item label="Address">{{ props.row.customerName }}</el-descriptions-item>
+        </el-descriptions>
+        <div v-for="item in props.row.items" :key="item.id">
+           Plat: {{ item.nom }} --- Prix: {{ item.prix }} 
+        </div>
       </div>
-      </template>
+     </template>
     </el-table-column>
     <el-table-column
         label="Date"
