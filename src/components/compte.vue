@@ -39,16 +39,12 @@
             <el-col :span="12" :offset="6" class="carré" >
                 <el-row >
                     <el-col class="adresse">
-                      {{ User.address }}
+                      Adresse
                     </el-col>
                 </el-row>
                 <el-row >
                     <el-col class="col">
-                        <div class="adr" ><a> XXXXXXXX XXXX XXXX </a></div>
-                    </el-col>
-
-                    <el-col class="col">
-                        <div class="adr" ><a> XXXXXXXX XXXX XXXX </a></div>
+                        <div class="adr" ><a>{{ User.address }}</a></div>
                     </el-col>
 
                 </el-row> 
@@ -57,25 +53,7 @@
 
         <el-row class="espace"></el-row>
 
-        <div>
-            <el-col :span="12" :offset="6" class="carré" >
-                <el-row >
-                    <el-col class="cb">
-                        Cartes Enregistrées
-                    </el-col>
-                </el-row>
-                <el-row >
-                    <el-col class="col">
-                        <div class="carte" >
-                        <i class="el-icon-bank-card"></i>
-                        <a> XXXXXXXX XXXX XXXX </a></div>
-                    </el-col>
-                </el-row>
-                <p>Vous voulez ajouter une autre carte ? Passer une commande et sélectionnez " Ajouter une carte " avant de valider</p>
-            </el-col>
-    
-        </div>
-
+        
 
     </div>
 
@@ -109,6 +87,7 @@ export default {
 .carré{
     border:solid #2c3e50 2px;
     margin-top:30px;
+    border-radius: 10px;
 }
 
 
@@ -117,16 +96,18 @@ export default {
     padding: 80px;
 }
 
-.détails, .adresse,.cb{
-  background-color: #2c3e50 ;
+.détails, .adresse{
+  background: linear-gradient(30deg, #2c3e50, #87140D);
   color:white;
   padding:1%;
   font-size:25px;
   border: solid white 1px;
+  border-radius: 10px 10px 0  0;
 }
 
 .col{
   background-color: #2c3e50 ;  
+  border-radius:  0  0 10px 10px;
 }
 
 .adr{
@@ -140,9 +121,21 @@ export default {
     padding: 7px; 
 }
 
-.prénom,.nom, .email, .télephone, .adr, .carte{
+.prénom,.nom, .email, .télephone, .adr{
     padding: 20px;
     background-color:white;
+}
+
+.adr{
+     border-radius:  0  0 10px 10px;
+}
+
+.email{
+     border-radius:  0  0 0 10px;
+}
+
+.télephone{
+    border-radius:  0  0 10px 0;
 }
 
 .md-raised{

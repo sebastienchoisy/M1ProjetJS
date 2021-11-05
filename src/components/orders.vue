@@ -5,10 +5,11 @@
       style="width: 100%">
     <el-table-column type="expand">
       <template slot-scope="props">
-        <span>hello</span>
-        <p>État: {{ props.row.status }}</p>
-        <p>Ville: {{ props.row.items }}</p>
+      <div>
+        <p class="etat">État: {{ props.row.status }}</p> 
+        <p>Détail de la commande: {{ props.row.items }}</p>
         <p>Adresse: {{ props.row.customerName }}</p>
+      </div>
       </template>
     </el-table-column>
     <el-table-column
@@ -39,5 +40,7 @@ export default {
 </script>
 
 <style scoped>
-
+.etat{
+  color:#2c3e50;
+}
 </style>
