@@ -60,7 +60,6 @@ export default {
           { min: 6, message: 'Votre mot de passe doit avoir au minimum 6 caractères', trigger: 'blur' }
         ],
         phoneNumber: [
-          { type: 'integer', required: true, message: 'Veuillez renseigner des chiffres', trigger: 'change' },
           { min: 10, max: 10, message: 'Votre numéro doit avoir 10 caractères', trigger: 'blur' }
         ],
         email: [
