@@ -2,7 +2,6 @@
   <div class="grid-content restaurant">
     <div class="image">
     <el-image v-if="photo" fit="fill" :src="photo" alt=""></el-image>
-    <el-image v-else :src="defaultPhoto" alt=""></el-image>
     </div>
     <span style="color:#cf1717;font-weight: bold ">{{restaurant.nom}}</span>
     <span> {{restaurant.cuisine}}</span>
@@ -14,14 +13,15 @@
 </template>
 
 <script>
-import {GoogleMapsService} from "../main";
-const defaultPhoto = require('../assets/imgresto.png');
+import googleService from "../services/google.service";
+const defaultPhoto = require('../assets/imgresto.jpg');
 export default {
   name: "restaurant",
   data:function(){
     return {
-      photo:'',
-      defaultPhoto
+      photo:defaultPhoto,
+      defaultPhoto,
+      isPhotoLoaded: false,
     }
   },
   props: {
@@ -31,19 +31,22 @@ export default {
   },
   methods : {
     getDetails(id){
-      GoogleMapsService.getRestaurantDetails(id);
+      googleService.getRestaurantDetails(id);
     },
     getPhoto(id){
-      GoogleMapsService.getRestaurantPhoto(id)
+      googleService.getRestaurantPhoto(id)
           .then((photo) => {
             if(photo !== 'photo introuvable'){
               this.photo = photo;
+            } else {
+              this.photo = defaultPhoto;
             }
+            this.isPhotoLoaded = true;
           })
     }
   },
   mounted: function(){
-    //this.getPhoto(this.restaurant.id);
+    this.getPhoto(this.restaurant.id);
   }
 }
 </script>

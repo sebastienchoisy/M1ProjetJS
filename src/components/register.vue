@@ -1,28 +1,27 @@
 <template>
   <div class="form-container">
-    <el-form label-width="120px">
+    <el-form :model="registerForm" :rules="rules" label-width="10px" ref="registerForm">
       <el-row>
-        <el-col :span="10"><el-input placeholder="Pseudo" v-model="user.username"></el-input></el-col>
-        <el-col :offset="4" :span="10"><el-input placeholder="Mot de passe" v-model="user.password" show-password></el-input></el-col>
+        <el-col :span="10"> <el-form-item prop="username"><el-input placeholder="Pseudo" v-model="registerForm.username"></el-input></el-form-item></el-col>
+        <el-col :offset="4" :span="10"><el-form-item prop="password"><el-input placeholder="Mot de passe" v-model="registerForm.password" show-password></el-input></el-form-item></el-col>
       </el-row>
       <el-row>
-        <el-col :span="10"><el-input placeholder="Prénom" v-model="user.name"></el-input></el-col>
-        <el-col :offset="4" :span="10"><el-input placeholder="Nom" v-model="user.lastname"></el-input></el-col>
+        <el-col :span="10"><el-form-item prop="name"><el-input placeholder="Prénom" v-model="registerForm.name"></el-input></el-form-item></el-col>
+        <el-col :offset="4" :span="10"><el-form-item prop="lastname"><el-input placeholder="Nom" v-model="registerForm.lastname"></el-input></el-form-item></el-col>
       </el-row>
       <el-row>
-        <el-col :span="10"><el-input placeholder="Téléphone" v-model="user.phoneNumber"></el-input></el-col>
-        <el-col :offset="4" :span="10"><el-input placeholder="Email" v-model="user.email"></el-input></el-col>
+        <el-col :span="10"><el-form-item prop="phoneNumber"><el-input placeholder="Téléphone" v-model="registerForm.phoneNumber"></el-input></el-form-item></el-col>
+        <el-col :offset="4" :span="10"><el-form-item prop="email"><el-input placeholder="Email" v-model="registerForm.email"></el-input></el-form-item></el-col>
       </el-row>
-          <el-radio-group v-model="user.role">
+      <el-form-item prop="role"> <el-radio-group v-model="registerForm.role">
           <el-radio label="Restaurateur"></el-radio>
           <el-radio label="Client"></el-radio>
-        </el-radio-group>
-        <el-input placeholder="Adresse" type="textarea" v-model="user.address"></el-input>
+        </el-radio-group></el-form-item>
+        <el-form-item prop="address"><el-input placeholder="Adresse" type="textarea" v-model="registerForm.address"></el-input></el-form-item>
       <el-form-item>
         <el-button @click="SubmitForm" type="primary" >Créer</el-button>
-        <el-button>Annuler</el-button>
       </el-form-item>
-      <span v-if="!isRegistered"> <h1>Inscription réussie !</h1></span>
+      <span v-if="isRegistered"> <h1>Inscription réussie !</h1></span>
     </el-form>
     </div>
 </template>
@@ -34,16 +33,71 @@ export default {
   name: "register",
   data() {
     return {
-       user: new User(),
+      registerForm: {
+        username: '',
+        name: '',
+        lastname: '',
+        password: '',
+        phoneNumber: '' ,
+        email: '',
+        role: '',
+        address: ''
+      },
        isRegistered: false,
+      rules: {
+        username: [
+          { required: true, message: 'Veuillez renseigner un pseudo', trigger: 'blur' },
+          { min: 3, message: 'Votre pseudo doit avoir au minimum 3 caractères', trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: 'Veuillez renseigner un prénom', trigger: 'change' }
+        ],
+        lastname: [
+          { required: true, message: 'Veuillez renseigner un nom', trigger: 'change' }
+        ],
+        password: [
+          { required: true, message: 'Veuillez renseigner un mot de passe', trigger: 'change' },
+          { min: 6, message: 'Votre mot de passe doit avoir au minimum 6 caractères', trigger: 'blur' }
+        ],
+        phoneNumber: [
+          { type: 'integer', required: true, message: 'Veuillez renseigner des chiffres', trigger: 'change' },
+          { min: 10, max: 10, message: 'Votre numéro doit avoir 10 caractères', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: 'Veuillez renseigner une adresse mail', trigger: 'change' },
+          {type: 'email', message: `adresse mail non valide`, trigger: 'change'}
+        ],
+        role: [
+          { required: true, message: 'Veuillez choisir un rôle', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: 'Veuillez donner une adresse', trigger: 'blur' }
+        ]
+      }
     };
   },
   methods:{
     SubmitForm(){
-      this.$store.dispatch('auth/register',this.user)
-          .then( () => {
-              this.isRegistered = true;
-          });
+      this.$refs["registerForm"].validate((valid) => {
+        if (valid) {
+          let user = new User(
+              this.registerForm.username,
+              this.registerForm.name,
+              this.registerForm.lastname,
+              this.registerForm.phoneNumber,
+              this.registerForm.address,
+              this.registerForm.email,
+              this.registerForm.password,
+              this.registerForm.role
+          )
+          this.$store.dispatch('auth/register',user)
+              .then( () => {
+                this.isRegistered = true;
+              });
+        } else {
+          console.log('problème formulaire');
+        }
+      })
     }
   }
 }

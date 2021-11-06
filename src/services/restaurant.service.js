@@ -1,3 +1,4 @@
+import {authHeader} from "@/helpers/authHeader";
 
 
 class restaurantService {
@@ -12,6 +13,10 @@ class restaurantService {
     }
     setRestaurantNameQuery(query){
         this.restaurantNameQuery = query;
+    }
+    resetQuery(){
+        this.restaurantNameQuery = '';
+        this.getRestaurantsFromServer();
     }
     setPageNumber(pagenumber){
         this.pageNumber = pagenumber;
@@ -39,11 +44,12 @@ class restaurantService {
             });
     }
 
-    addRestaurant() {
-        let url = "http://localhost:8080/api/restaurants";
+    addRestaurant(username,restaurant) {
+        let url = "http://localhost:8080/api/user/addRestaurant";
         fetch(url, {
             method: "POST",
-            body: 'formData'
+            headers: authHeader(),
+            body: JSON.stringify({restaurant,username})
         })
             .then((response) => response.json())
             .then((res) => console.log(res))

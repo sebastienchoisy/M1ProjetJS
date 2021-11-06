@@ -1,17 +1,28 @@
 <template>
-  <div>
+  <div v-if="orders.length">
   <el-table
       :data="orders"
-      style="width: 100%">
+      style="width: 70%;margin: auto;">
     <el-table-column type="expand">
       <template slot-scope="props">
       <div>
-        <el-descriptions title="Détail de la commande">
-            <el-descriptions-item><div v-for="item in props.row.items" :key="item.id">
-              Plat: {{ item.nom }} --- Prix: {{ item.prix }}
-            </div></el-descriptions-item>
-        </el-descriptions>
-
+          <el-table
+          :data="props.row.items">
+            <el-table-column
+                label="Plat"
+                prop="nom">
+            </el-table-column>
+            <el-table-column
+                label="Quantité"
+                prop="quantity">
+            </el-table-column>
+            <el-table-column
+                label="prix">
+              <template slot-scope="scope">
+                <span>{{scope.row.prix}} €</span>
+              </template>
+            </el-table-column>
+          </el-table>
       </div>
      </template>
     </el-table-column>
@@ -24,10 +35,15 @@
         prop="restaurantName">
     </el-table-column>
     <el-table-column
-        label="prix"
-        prop="totalCost">
+        label="prix">
+      <template slot-scope="scope">
+        <span>{{scope.row.totalCost}} €</span>
+      </template>
     </el-table-column>
   </el-table>
+  </div>
+  <div style="margin-top: 20%;" v-else>
+    <h2> Vous n'avez pas encore de commande ! Sélectionner un <router-link to="/restaurants" style="color:dodgerblue;text-decoration: none">restaurant</router-link> pour commander.</h2>
   </div>
 </template>
 

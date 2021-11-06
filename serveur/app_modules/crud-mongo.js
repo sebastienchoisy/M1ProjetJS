@@ -1,9 +1,11 @@
 const User = require("./model/User");
+const Restaurant = require("./model/Restaurant")
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 const jwt = require("jsonwebtoken");
 const Order = require("./model/Order");
 const bcrypt = require('bcryptjs');
+
 
 //var url = 'mongodb://localhost:27017/test';
 
@@ -149,7 +151,7 @@ exports.findRestaurantById = async (id) => {
 	}
 }
 
-exports.createRestaurant = async (formData) => {
+exports.createRestaurant = async (req) => {
 	let client = await MongoClient.connect(url, { useNewUrlParser: true });
 	let db = client.db(dbName);
 	let reponse;
@@ -322,6 +324,7 @@ exports.registerNewUser = async (req) => {
 				email: req.body.email,
 				password: bcrypt.hashSync(req.body.password,10),
 				phoneNumber: req.body.phoneNumber,
+				role: req.body.role,
 				address: req.body.address,
 				type: req.body.type,
 				restaurants: []
@@ -392,38 +395,20 @@ exports.addUserRestaurant = async (req) => {
 			}
 		})
 		if (isAuthVerified) {
-			await db.collection("users").updateOne({'username': req.body.username},{$addToSet: {restaurants: req.body.idRestaurant}});
-			return 'Restaurant ' + req.body.idRestaurant + ' ajouté'
-		} else {
-			return "Problème d'authentification"
-		}
-
-	} catch(err) {
-		return err;
-	}
-}
-
-exports.removeUserRestaurant = async (req) => {
-	let client = await MongoClient.connect(url, { useNewUrlParser: true });
-	let db = client.db(dbName);
-	let isAuthVerified;
-	try {
-		let token = req.headers["x-access-token"];
-		jwt.verify(token,"bigmac",(err,decoded)=> {
-			if (err) {
-				return err;
-			} else if (req.body.username === decoded.username) {
-				isAuthVerified = true;
-			}
-		})
-		if (isAuthVerified) {
-			let role = await db.collection("users").findOne({username: req.body.nusername}).then((result)=> result.role)
-			if(role === 'restaurateur') {
-				await db.collection("users").updateOne({'username': req.body.username}, {$pull: {restaurants: req.body.idRestaurant}});
-				return 'Restaurant ' + req.body.idRestaurant + ' supprimé'
-			} else {
-				return "Vous n'êtes pas restaurateur !"
-			}
+			let restaurant = new Restaurant ({
+				name : req.body.restaurant.name,
+				address : {
+					building :req.body.restaurant.address[0],
+					coord : req.body.restaurant.address[1],
+					street: req.body.restaurant.address[2],
+					zipcode: req.body.restaurant.address[3],
+				},
+				cuisine : req.body.restaurant.cuisine,
+				borough : req.body.restaurant.borough,
+			})
+			await db.collection("restaurants").insertOne(restaurant);
+			await db.collection("users").updateOne({'username': req.body.username},{$addToSet: {restaurants: req.body.restaurant.name}});
+			return 'Restaurant ajouté'
 		} else {
 			return "Problème d'authentification"
 		}

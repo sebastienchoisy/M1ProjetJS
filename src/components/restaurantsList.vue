@@ -16,19 +16,21 @@
       <el-input placeholder="Trouver un restaurant" suffix-icon="el-icon-knife-fork" v-model="restaurantNameQuery" class="search">
       </el-input>
       <el-button type="submit" icon="el-icon-search" class="chercher" v-on:click="rechercherRestaurant">Chercher</el-button>
-      <el-button type="Submit" icon="el-icon-delete" class="supprimer" v-on:click="resetQuery"></el-button>
+      <el-button type="Submit" icon="el-icon-refresh-left" class="supprimer" v-on:click="resetQuery"></el-button>
     </div>
   </div>
+    <div class="queryselector">
+      <input type="range" min="8" max="104" v-model="pageSize" step="8" class="slider">
+      <div class="navigation">
+        <el-button class="item" type="primary" icon="el-icon-arrow-left" :disabled="pageNumber===0" v-on:click="goPrevious" circle></el-button>
+        <el-button class="item" type="primary" icon="el-icon-arrow-right" v-on:click="goNext()" circle></el-button>
+      </div>
+    </div>
     <el-row :gutter="25">
       <el-col v-for="(r,index) in restaurants" :key="index" :xs="8" :sm="6" :md="4" :lg="3">
         <restaurant :restaurant="r"></restaurant>
       </el-col>
     </el-row>
-  <div class="queryselector">
-    <input type="range" min="5" max="100" v-model="pageSize" step="5" class="slider">
-    <a href="#" class="previous round" :disabled="pageNumber===0" v-on:click="goPrevious">&#8249;</a>
-    <a href="#" class="next round" v-on:click="goNext">&#8250;</a>
-  </div>
   </div>
 </template>
 
@@ -59,8 +61,8 @@ export default {
       this.restaurants = restaurantService.getTabRestaurants();
     },
     resetQuery(){
-      this.restaurantNameQuery = '';
-      this.restaurants = restaurantService.getRestaurantsFromServer();
+      restaurantService.resetQuery();
+      this.restaurants = restaurantService.getTabRestaurants();
     },
     rechercherRestaurant(){
       restaurantService.setRestaurantNameQuery(this.restaurantNameQuery);
@@ -94,9 +96,6 @@ export default {
       }
     }
   },
-  mounted(){
-
-  },
   beforeMount() {
     this.restaurants = restaurantService.getTabRestaurants();
   }
@@ -115,6 +114,9 @@ form {
 
 .queryselector{
   margin-top:5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 
@@ -152,12 +154,11 @@ form {
 .slider {
   color: red;
   -webkit-appearance: none;
-  width: 100%;
+  width: 50%;
   height: 20px;
   border-radius: 5px;
   background: #083b66;
   outline: none;
-  opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
@@ -170,8 +171,12 @@ form {
   cursor: pointer;
 }
 
+.navigation .item {
+  background-color: #083b66;
+  border-color:#083b66;
+}
+
 a {
-  margin-top: 30px;
   text-decoration: none;
   display: inline-block;
   padding: 8px 16px;

@@ -12,6 +12,8 @@ class AuthService {
                 if(response !== 'mauvais mot de passe') {
                     localStorage.setItem('user', JSON.stringify(response));
                     return response;
+                } else {
+                    return 'error'
                 }
             })
             .catch(function (err) {

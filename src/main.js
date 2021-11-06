@@ -22,7 +22,7 @@ Vue.use(VueRouter);
 Vue.use(VueJWT);
 Vue.use(VueGoogleMaps, {
   load: {
-    //key: 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE'
+    key: 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE'
   }
 });
 

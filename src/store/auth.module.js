@@ -13,14 +13,15 @@ export const auth = {
         login({ commit }, user) {
             return AuthService.login(user).then(
                 user => {
-                    if(localStorage.getItem('user')){
-                        commit('loginSuccess', user);
-                        return Promise.resolve(user);
+                    if(user !== 'error') {
+                        if (localStorage.getItem('user')) {
+                            commit('loginSuccess', user);
+                            return Promise.resolve(user);
+                        }
+                    } else {
+                        commit('loginFailure');
+                        return user;
                     }
-                },
-                error => {
-                    commit('loginFailure');
-                    return Promise.reject(error);
                 }
             );
         },
@@ -39,6 +40,9 @@ export const auth = {
                     return Promise.reject(error);
                 }
             );
+        },
+        addRestaurant({commit},restaurantName) {
+            commit('addRestaurant',restaurantName);
         }
     },
     mutations: {
@@ -59,6 +63,9 @@ export const auth = {
         },
         registerFailure(state) {
             state.status.loggedIn = false;
+        },
+        addRestaurant(state, restaurantName) {
+            state.user.restaurants.push(restaurantName);
         }
     }
 };

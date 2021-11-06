@@ -2,6 +2,7 @@
   <div>
   <div class="auth-container">
     <el-button v-if="!isAuthentified()" @click="dialogVisible = true">Se connecter</el-button>
+    <span v-if="isAuthentified()" style="margin-right:1%">Connecté(e) en tant que <span style="color:dodgerblue;font-weight: bold">{{getUserName()}}</span></span>
     <el-button v-if="isAuthentified()" @click="logOut">Se Déconnecter</el-button>
     <router-link to="/register"><el-button v-if="!isAuthentified()">S'enregistrer</el-button></router-link>
 
@@ -9,12 +10,12 @@
         title="Connexion"
         :visible.sync="dialogVisible"
     >
-      <el-form label-position="top"  status-icon  ref="ruleForm" label-width="70px" class="demo-ruleForm">
-        <el-form-item>
-          <el-input type="text" placeholder="Pseudo" v-model="user.username"></el-input>
+      <el-form :model="loginForm" :rules="loginRules" label-position="top"  status-icon  ref="loginForm" label-width="70px" class="demo-ruleForm">
+        <el-form-item prop="username">
+          <el-input type="text" placeholder="Pseudo" v-model="loginForm.username"></el-input>
         </el-form-item>
-        <el-form-item prop="checkPass">
-          <el-input type="password" placeholder="Mot de passe" v-model="user.password" ></el-input>
+        <el-form-item prop="password">
+          <el-input type="password" placeholder="Mot de passe" v-model="loginForm.password" ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="logIn" >Se connecter</el-button>
@@ -56,12 +57,25 @@ export default {
   name: "headerContainer",
   data() {
     return {
-      user : new User(),
       dialogVisible: false,
       message: '',
       activeIndex: '',
       name:'',
-      password:''
+      password:'',
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      loginRules: {
+        username: [
+          { required: true, message: 'Veuillez renseigner un pseudo', trigger: 'blur' },
+          { min: 3, message: 'Votre pseudo doit avoir au minimum 3 caractères', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: 'Veuillez renseigner un mot de passe', trigger: 'change' },
+          { min: 6, message: 'Votre mot de passe doit avoir au minimum 6 caractères', trigger: 'blur' }
+        ],
+      }
     };
   },
   methods: {
@@ -105,15 +119,30 @@ export default {
       this.message = '';
     },
     logIn(){
-      this.$store.dispatch('auth/login',this.user)
-          .then( () => {
-              this.$store.dispatch('order/getOrders',this.user.username);
-              this.dialogVisible = false;
-              if(this.$route.path === '/register'){
-                this.$router.push({path: '/restaurants'});
-              }
-              this.getActiveIndex();
-      });
+      let user;
+      this.message = '';
+      this.$refs["loginForm"].validate((valid) => {
+        if (valid) {
+          user = new User();
+          user.username = this.loginForm.username;
+          user.password = this.loginForm.password;
+          this.$store.dispatch('auth/login',user)
+              .then( (res) => {
+                if(res !== 'error') {
+                  this.$store.dispatch('order/getOrders', user.username);
+                  this.dialogVisible = false;
+                  if (this.$route.path === '/register') {
+                    this.$router.push({path: '/restaurants'});
+                  }
+                  this.getActiveIndex();
+                } else {
+                  this.message = 'Mauvais pseudo ou mauvais mot de passe'
+                }
+              });
+        } else {
+          console.log('problème formulaire');
+        }
+      })
     },
     logOut(){
       this.$store.dispatch('auth/logout');
@@ -125,6 +154,9 @@ export default {
     },
     isAuthentified(){
       return this.$store.state.auth.status.loggedIn;
+    },
+    getUserName(){
+      return this.$store.state.auth.user.username;
     }
   },
   beforeMount() {
@@ -152,6 +184,7 @@ export default {
 .auth-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 .router-link-active {
   text-decoration: none;

@@ -38,7 +38,8 @@
                 </el-row>   
             </el-col>
  </div>
-   <div v-if="order.length" id="commande">
+   <div v-if="order.length " id="commande">
+     <div v-if="!isOrderConfirmed">
      <el-row>
        <el-col :span="24"><h1>Votre commande</h1></el-col>
      </el-row>
@@ -48,9 +49,9 @@
        <div class="float-right">{{item.prix}} €</div>
        </el-row>
        <el-row class="flex-center">
-       <el-col :offset="8" :span="4"> <el-button :disabled="!isAuthentified()" icon="el-icon-plus" circle v-on:click="addItemToOrder(item)"></el-button></el-col>
+       <el-col :offset="8" :span="4"><el-button :disabled="!isAuthentified()" icon="el-icon-minus" circle v-on:click="removeItemToOrder(item)"></el-button></el-col>
          <el-col :span="2">{{item.quantity}}</el-col>
-       <el-col :span="4"> <el-button :disabled="!isAuthentified()" icon="el-icon-minus" circle v-on:click="removeItemToOrder(item)"></el-button></el-col>
+       <el-col :span="4"> <el-button :disabled="!isAuthentified()" icon="el-icon-plus" circle v-on:click="addItemToOrder(item)"></el-button></el-col>
        </el-row>
      </el-row>
      <el-row>
@@ -59,6 +60,10 @@
      <el-row>
        <el-col><el-button @click="dialogVisible = true">Valider</el-button><el-button @click="cancelOrder()">Annuler</el-button></el-col>
      </el-row>
+       </div>
+     <div v-else>
+       <h1 style="margin-top: 30%"> Commande confirmé !</h1>
+     </div>
    </div>
    <el-dialog
        title="Confirmation commande"
@@ -97,7 +102,8 @@ export default {
       },
       label: '',
       message: message.LOGGINTOORDER,
-      dialogVisible: false
+      dialogVisible: false,
+      isOrderConfirmed: false,
     }
   },
   methods: {
@@ -105,6 +111,7 @@ export default {
       let username = this.$store.state.auth.user.username;
       let order = new Order(this.restaurant.name,username,new Date(),this.order,this.orderCost);
       this.$store.dispatch('order/sendOrder',order);
+      this.isOrderConfirmed = true;
     },
     getDetails() {
       restaurantService.getRestaurantFromId(this.$route.params.id).then((res) =>{
@@ -231,6 +238,7 @@ h1 {
 
 #commande {
   width: 25%;
+  min-width: 340px ;
 }
 
 #commande .el-col {
@@ -239,6 +247,7 @@ h1 {
 
 #details {
   width:50%;
+  min-width: 600px;
 }
 
 .order-row {
