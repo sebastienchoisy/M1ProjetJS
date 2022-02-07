@@ -7,8 +7,6 @@ const Order = require("./model/Order");
 const bcrypt = require('bcryptjs');
 
 
-//var url = 'mongodb://localhost:27017/test';
-
 // Connection URL
 const url = 'mongodb://localhost:27017';
 

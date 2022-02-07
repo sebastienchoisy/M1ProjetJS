@@ -133,6 +133,7 @@ app.get('/api/restaurants/:id', (req, res) => {
 
 app.get('/api/restaurants/photo/:id', function(req,res) {
 	let id = req.params.id;
+	let api_key = 'AIzaSyCz9DqNjZr_2P3G0YBBFIN6rIUOAr7SrhE';
 	// api key supprimé car repo en public
 
 
